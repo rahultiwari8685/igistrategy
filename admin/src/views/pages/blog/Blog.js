@@ -32,11 +32,7 @@ const schema = yup.object().shape({
 });
 
 
-// const categoriesList = [
-//     { id: 1, name: "Politics" },
-//     { id: 2, name: "Sport" },
-//     { id: 3, name: "Entertainment" },
-// ];
+
 
 const News = () => {
     const [slugEdited, setSlugEdited] = useState(false);
