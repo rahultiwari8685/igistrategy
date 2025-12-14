@@ -75,6 +75,41 @@ const _nav = [
     to: '/Category',
     icon: <CIcon icon={cilTags} customClassName="nav-icon" />,
   },
+  {
+    component: CNavItem,
+    name: 'Reports',
+    to: '/reports',
+    icon: <CIcon icon={cilTags} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Customers',
+    to: '/customers',
+    icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
+  },
+
+  {
+    component: CNavGroup,
+    name: 'Subscription',
+    to: '/subscription',
+    icon: <CIcon icon={cilNewspaper} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Subscription',
+        to: '/subscription',
+        icon: <CIcon icon={cilPlus} customClassName="nav-icon" />,
+      },
+      {
+        component: CNavItem,
+        name: 'Plans',
+        to: '/plans',
+        icon: <CIcon icon={cilPlus} customClassName="nav-icon" />,
+      }
+
+
+    ],
+  },
 
 
 

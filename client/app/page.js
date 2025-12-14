@@ -58,9 +58,9 @@ export default function Home() {
 
   const textBlogs = blogs.filter((item) => {
     return (
-      !item.youtubeUrl &&            // Not a YouTube blog
-      item.videoType !== "1" &&      // Not a video blog
-      item.videoType !== 1           // Not a video blog (number type also checked)
+      !item.youtubeUrl &&
+      item.videoType !== "1" &&
+      item.videoType !== 1
     );
   });
 
@@ -168,7 +168,7 @@ export default function Home() {
                   <div className="col-md-6" key={item._id}>
                     <div className="tranding_post">
 
-                      <a className="post_img" href={`/news-details/${item.slug}`}>
+                      <a className="post_img" href={`/blog-details/${item.slug}`}>
                         <img
                           src={
                             item.thumbnail

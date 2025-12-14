@@ -1,0 +1,24 @@
+{
+    "Uttar Pradesh": [
+        "Lucknow",
+        "Varanasi",
+        "Kanpur",
+        "Noida"
+    ],
+    "Bihar": [
+        "Patna Sahib",
+        "Pataliputra",
+        "Gaya"
+    ],
+    "Maharashtra": [
+        "Mumbai North",
+        "Mumbai South",
+        "Pune",
+        "Nagpur"
+    ],
+    "Delhi": [
+        "New Delhi",
+        "North East Delhi",
+        "South Delhi"
+    ]
+}

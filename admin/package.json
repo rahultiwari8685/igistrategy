@@ -37,6 +37,7 @@
     "@hookform/resolvers": "^5.1.1",
     "@popperjs/core": "^2.11.8",
     "@tinymce/tinymce-react": "^6.3.0",
+    "axios": "^1.13.2",
     "chart.js": "^4.4.7",
     "classnames": "^2.5.1",
     "core-js": "^3.40.0",
@@ -51,7 +52,8 @@
     "recharts": "^3.2.1",
     "redux": "5.0.1",
     "simplebar-react": "^3.3.0",
-    "yup": "^1.6.1"
+    "yup": "^1.6.1",
+    "zustand": "^5.0.9"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",

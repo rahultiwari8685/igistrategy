@@ -6,16 +6,19 @@ import mongoose from "mongoose";
 import userRoutes from "./routes/userRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js"
-
+import reportRoutes from "./routes/reportRoutes.js"
 import authRoutes from "./routes/auth.js";
-
+import planRoutes from "./routes/planRoutes.js"
+import customerRoutes from "./routes/customerRoutes.js"
+import paymentRoutes from "./routes/paymentRoutes.js"
+import webhookRoutes from "./routes/webhookRoutes.js"
 import cors from "cors";
 
 const app = express();
 
 app.use(cors({
     origin: "http://localhost:3000",
-    methods: "GET,POST,PUT,DELETE",
+    methods: "GET,POST,PUT,DELETE,PATCH",
     credentials: true
 }));
 
@@ -23,7 +26,11 @@ app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/blogs", blogRoutes);
-
+app.use("/api/reports", reportRoutes)
+app.use("/api/plans", planRoutes)
+app.use("/api/customers", customerRoutes)
+app.use("/api/payments", paymentRoutes);
+app.use("/api/webhooks", webhookRoutes);
 
 app.use("/uploads", express.static("uploads"));
 app.use("/api/auth", authRoutes);

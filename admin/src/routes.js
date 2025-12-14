@@ -2,6 +2,10 @@ import React from 'react'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Blog = React.lazy(() => import('./views/pages/blog/Blog'))
+const Reports = React.lazy(() => import('./views/pages/reports/Reports'))
+const Plans = React.lazy(() => import('./views/pages/plans/Plans'))
+const Subscription = React.lazy(() => import('./views/pages/subscription/Subscriptions'))
+const Customers = React.lazy(() => import('./views/pages/customers/Customers'))
 const UpdateBlog = React.lazy(() => import('./views/pages/blog/UpdateBlog'))
 const PublishedBlog = React.lazy(() => import('./views/pages/blog/PublishedBlog'))
 const DraftBlog = React.lazy(() => import('./views/pages/blog/DraftBlog'))
@@ -21,6 +25,10 @@ const routes = [
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
 
   { path: '/blog', name: 'Blog', element: Blog },
+  { path: '/reports', name: 'Reports', element: Reports },
+  { path: '/customers', name: 'Customers', element: Customers },
+  { path: '/plans', name: 'Plans', element: Plans },
+  { path: '/subscription', name: 'Subscription', element: Subscription },
   { path: '/UpdateBlog/:id', name: 'Update Blog', element: UpdateBlog },
   { path: '/PublishedBlog', name: 'Published Blog', element: PublishedBlog },
   { path: '/DraftBlog', name: 'Draft Blog', element: DraftBlog },
