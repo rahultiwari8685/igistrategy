@@ -94,12 +94,12 @@ const _nav = [
     to: '/subscription',
     icon: <CIcon icon={cilNewspaper} customClassName="nav-icon" />,
     items: [
-      {
-        component: CNavItem,
-        name: 'Subscription',
-        to: '/subscription',
-        icon: <CIcon icon={cilPlus} customClassName="nav-icon" />,
-      },
+      // {
+      //   component: CNavItem,
+      //   name: 'Subscription',
+      //   to: '/subscription',
+      //   icon: <CIcon icon={cilPlus} customClassName="nav-icon" />,
+      // },
       {
         component: CNavItem,
         name: 'Plans',
