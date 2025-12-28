@@ -7,8 +7,11 @@ const blogSchema = new mongoose.Schema(
         subtitle: { type: String, default: "" },
 
         categories: [
-            { type: mongoose.Schema.Types.ObjectId, ref: "Category", required: true }
+            { type: mongoose.Schema.Types.ObjectId, ref: "Category" }
         ],
+
+
+
 
         type: { type: String, enum: ["1", "2"], default: "1" },
 

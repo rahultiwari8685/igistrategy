@@ -53,7 +53,7 @@ export default function Header() {
                             <ul className="navbar-nav">
 
 
-                                <li className="dropdown">
+                                {/* <li className="dropdown">
                                     <a
                                         className="nav-link dropdown-toggle"
                                         onClick={() => toggleDropdown("home")}
@@ -66,6 +66,10 @@ export default function Header() {
                                             <li><a href="/index-2">Home Version 2</a></li>
                                         </ul>
                                     )}
+                                </li> */}
+
+                                <li>
+                                    <a className="nav-link" href="/">Home</a>
                                 </li>
 
 
@@ -94,7 +98,7 @@ export default function Header() {
                                 </li>
 
 
-                                <li className="dropdown">
+                                {/* <li className="dropdown">
                                     <a
                                         className="nav-link dropdown-toggle"
                                         onClick={() => toggleDropdown("shop")}
@@ -107,47 +111,23 @@ export default function Header() {
                                             <li><a href="/shop-details">Shop Details</a></li>
                                         </ul>
                                     )}
+                                </li> */}
+
+
+                                <li>
+                                    <a className="nav-link" href="/report">Reports</a>
                                 </li>
 
+                                {/* <li><a href="/login">Login</a></li> */}
 
-                                <li className="dropdown">
-                                    <a
-                                        className="nav-link dropdown-toggle"
-                                        onClick={() => toggleDropdown("page")}
-                                    >
-                                        Poll
-                                    </a>
-                                    {dropdowns.page && (
-                                        <ul className="dropdown-menu show">
 
-                                            {/* SUBMENU */}
-                                            <li className="dropdown-sub">
-                                                <a
-                                                    className="nav-link dropdown-toggle"
-                                                    onClick={() => toggleDropdown("submenu")}
-                                                >
-                                                    Sub Menu
-                                                </a>
-
-                                                {dropdowns.submenu && (
-                                                    <ul className="dropdown-menu show">
-                                                        <li><a href="#">Sub Menu v1</a></li>
-                                                        <li><a href="#">Sub Menu v2</a></li>
-                                                    </ul>
-                                                )}
-                                            </li>
-
-                                            <li><a href="/register">Register</a></li>
-                                            <li><a href="/login">Login</a></li>
-                                            <li><a href="/error">Error (404)</a></li>
-                                        </ul>
-                                    )}
-                                </li>
 
                                 {/* CONTACT */}
                                 <li>
                                     <a className="nav-link" href="/contact">Contact us</a>
                                 </li>
+                                <li><a href="/login">Login</a></li>
+
 
                             </ul>
                         </div>

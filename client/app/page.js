@@ -2,14 +2,13 @@
 "use client";
 
 import Script from "next/script";
-
+import Link from "next/link";
 import Image from "next/image";
 import Header from "./components/Header";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   useEffect(() => {
-    // init WOW if available after scripts load
     if (typeof window !== "undefined") {
       if (window.WOW) {
         try {
@@ -23,12 +22,12 @@ export default function Home() {
 
   const [blogs, setBlogs] = useState([]);
   const featureBlogs = blogs.slice(0, 3);
-  // const fashionBlogs = blogs.slice(0, 4);
+
   const fashionBlogs = blogs.filter(b => b.videoType !== "1").slice(0, 4);
 
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/blogs/getAllBlog", {
+    fetch("http://127.0.0.1:5000/api/blogs/getAllBlog", {
       method: "GET",
       mode: "cors",
       headers: {
@@ -68,16 +67,10 @@ export default function Home() {
 
   return (
     <>
-      {/* Styles (from public/css) */}
-
-
-
 
       <Header />
 
 
-
-      {/* Braking News Area */}
       <div className="container">
         <div className="braking_news row">
           <h4 className="braking_heding col-1">News</h4>
@@ -149,7 +142,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Post section */}
+
       <section className="post_section">
 
         <div className="container">
@@ -161,24 +154,28 @@ export default function Home() {
               <div className="row tranding_post_area">
                 <div className="col-12 tranding_tittle">
                   <h2>Blog</h2>
-                  <a href="/news">View More <i className="fa fa-arrow-right" /></a>
+                  <a href="/blog">View More <i className="fa fa-arrow-right" /></a>
                 </div>
 
                 {textBlogs.slice(0, 4).map((item) => (
                   <div className="col-md-6" key={item._id}>
                     <div className="tranding_post">
 
-                      <a className="post_img" href={`/blog-details/${item.slug}`}>
+                      <Link
+                        href={`/blog-details/${item.slug}`}
+                        className="post_img"
+                      >
                         <img
                           src={
                             item.thumbnail
-                              ? `http://localhost:5000/uploads/${item.thumbnail}`
+                              ? `http://127.0.0.1:5000/uploads/images/${item.thumbnail}`
                               : "https://via.placeholder.com/400x300?text=No+Image"
                           }
                           alt={item.title}
                         />
+
                         <span className="tag_btn">{item.categories?.[0]?.name}</span>
-                      </a>
+                      </Link>
 
                       <div className="post_content">
                         <a href={`/news-details/${item.slug}`} className="t_heding">
@@ -199,12 +196,12 @@ export default function Home() {
 
 
 
-              {/* Feature Post Area*/}
+
               <div className="row feature_post_area">
                 <div className="col-12">
                   <div className="feature_tittle">
                     <h2>Report</h2>
-                    <a href="/news-2">View More <i className="fa fa-arrow-right" /></a>
+                    <a href="/blog">View More <i className="fa fa-arrow-right" /></a>
                   </div>
                 </div>
 
@@ -217,11 +214,11 @@ export default function Home() {
                       <div className={`media feature_post ${index === 2 ? "border-0" : ""}`}>
 
                         <div className="feture_img">
-                          <a href={`/news-details/${item.slug}`}>
+                          <a href={`/blog-details/${item.slug}`}>
                             <img
                               src={
                                 item.thumbnail
-                                  ? `http://localhost:5000/uploads/${item.thumbnail}`
+                                  ? `http://localhost:5000/uploads/images/${item.thumbnail}`
                                   : "https://via.placeholder.com/400x300?text=No+Image"
                               }
                               alt={item.title}
@@ -256,13 +253,13 @@ export default function Home() {
 
 
 
-              {/* Watch It Area */}
+
               < div className="row watch_it_area">
                 <div className="col-12">
                   <div className="feature_tittle">
                     <br />  <br />
                     <h2>Public Opinion</h2>
-                    <a href="/video-details">View More <i className="fa fa-arrow-right" /></a>
+                    <a href="/blog">View More <i className="fa fa-arrow-right" /></a>
                   </div>
                 </div>
 
@@ -272,21 +269,21 @@ export default function Home() {
                   .slice(0, 4)
                   .map((item) => {
 
-                    // YouTube thumbnail handling
+
                     const videoId = getYoutubeId(item.youtubeUrl);
                     const youtubeThumb = videoId
                       ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
                       : null;
 
-                    // Final thumbnail priority
+
                     const thumb = item.thumbnail
-                      ? `http://localhost:5000/uploads/${item.thumbnail}`
+                      ? `http://localhost:5000/uploads/images/${item.thumbnail}`
                       : youtubeThumb || "https://via.placeholder.com/600x400?text=No+Image";
 
                     return (
                       <div className="col-md-6" key={item._id}>
                         <div className="watch_video">
-                          <a href={`/video-details/${item.slug}`} className="video_thumbnail">
+                          <a href={`/blog-details/${item.slug}`} className="video_thumbnail">
                             <img src={thumb} alt={item.title} />
 
                             <span className="play_btn">
@@ -309,7 +306,7 @@ export default function Home() {
                   .map((item) => (
                     <div className="col-md-6" key={item._id}>
                       <div className="tranding_post wathc_text">
-                        <a href={`/video-details/${item.slug}`} className="t_heding">
+                        <a href={`/blog-details/${item.slug}`} className="t_heding">
                           {item.title}
                         </a>
                         <h6>
@@ -329,21 +326,21 @@ export default function Home() {
                 <div className="col-12">
                   <div className="feature_tittle">
                     <h2>Analysis</h2>
-                    <a href="/news-2">View More <i className="fa fa-arrow-right" /></a>
+                    <a href="/blog">View More <i className="fa fa-arrow-right" /></a>
                   </div>
                 </div>
 
-                {/* TEXT BLOGS WITH THUMBNAIL (like Blog section) */}
+
                 {fashionBlogs.slice(0, 4).map((item) => (
                   <div className="col-md-6" key={item._id}>
                     <div className="tranding_post">
 
-                      {/* Thumbnail (small) */}
-                      <a href={`/news-details/${item.slug}`} className="post_img">
+
+                      <a href={`/blog-details/${item.slug}`} className="post_img">
                         <img
                           src={
                             item.thumbnail
-                              ? `http://localhost:5000/uploads/${item.thumbnail}`
+                              ? `http://localhost:5000/uploads/images/${item.thumbnail}`
                               : "https://via.placeholder.com/400x300?text=No+Image"
                           }
                           alt={item.title}
@@ -354,9 +351,9 @@ export default function Home() {
                         </span>
                       </a>
 
-                      {/* Content */}
+
                       <div className="post_content">
-                        <a href={`/news-details/${item.slug}`} className="t_heding">
+                        <a href={`/blog-details/${item.slug}`} className="t_heding">
                           {item.title}
                         </a>
 
@@ -434,7 +431,7 @@ export default function Home() {
                   .slice(0, 3)
                   .map((item, index) => {
                     const imgSrc = item.thumbnail
-                      ? `http://localhost:5000/uploads/${item.thumbnail}`
+                      ? `http://localhost:5000/uploads/images/${item.thumbnail}`
                       : "https://via.placeholder.com/300x200?text=No+Image";
 
                     return (
@@ -494,7 +491,7 @@ export default function Home() {
                     const thumbnail = id
                       ? `https://img.youtube.com/vi/${id}/maxresdefault.jpg`
                       : video.thumbnail
-                        ? `http://localhost:5000/uploads/${video.thumbnail}`
+                        ? `http://localhost:5000/uploads/images/${video.thumbnail}`
                         : "https://via.placeholder.com/400x250?text=No+Video";
 
                     return (
@@ -598,7 +595,7 @@ export default function Home() {
         </div>
       </section >
 
-      {/* Connect with us */}
+
       < section className="connect_with_us" >
         <div className="container">
           <h2>Connect with us</h2>
@@ -612,7 +609,7 @@ export default function Home() {
         </div>
       </section >
 
-      {/* Footer */}
+
       < footer className="footer_area" >
         <div className="container">
           <div className="footer_inner row">

@@ -48,17 +48,35 @@ export const getBlogs = async (req, res) => {
 };
 
 
+
 export const getBlog = async (req, res) => {
     try {
-        const blog = await Blog.findById(req.params.id).populate("categories");
+        const { slug } = req.params;
 
-        if (!blog) return res.status(404).json({ error: "Blog not found" });
+        const blog = await Blog.findOne({ slug })
+            .populate("categories", "name slug");
 
-        return res.status(200).json({ success: true, data: blog });
+        if (!blog) {
+            return res.status(404).json({
+                success: false,
+                message: "Blog not found"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: blog
+        });
+
     } catch (error) {
-        return res.status(500).json({ error: error.message });
+        console.error("Get Blog Error:", error);
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
     }
 };
+
 
 
 export const updateBlog = async (req, res) => {
