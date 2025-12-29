@@ -12,6 +12,9 @@ import planRoutes from "./routes/planRoutes.js"
 import customerRoutes from "./routes/customerRoutes.js"
 import paymentRoutes from "./routes/paymentRoutes.js"
 import webhookRoutes from "./routes/webhookRoutes.js"
+
+import customerAuthRoutes from "./routes/customerAuth.js";
+
 import cors from "cors";
 
 const app = express();
@@ -39,6 +42,7 @@ app.use("/api/webhooks", webhookRoutes);
 
 
 app.use("/api/auth", authRoutes);
+app.use("/api/customer-auth", customerAuthRoutes);
 
 
 

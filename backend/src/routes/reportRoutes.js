@@ -24,7 +24,7 @@ router.post(
 router.get("/getAllReport", getReports);
 
 // READ (SINGLE)
-router.get("/:id", getReportById);
+router.get("/getReportById/:id", getReportById);
 
 // UPDATE
 router.put(

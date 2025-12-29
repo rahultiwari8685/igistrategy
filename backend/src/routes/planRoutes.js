@@ -10,11 +10,13 @@ import {
 
 const router = express.Router();
 
-// CREATE PLAN
-router.post("/savePlan", createPlan);
-
 // GET ALL PLANS
-router.get("/getAllPlan", getPlans);
+router.get("/getAllPlans", getPlans);
+
+// CREATE PLAN
+router.post("/savaPlan", createPlan);
+
+/* ---------- DYNAMIC ROUTES LAST ---------- */
 
 // GET SINGLE PLAN
 router.get("/:id", getPlanById);
@@ -23,6 +25,6 @@ router.get("/:id", getPlanById);
 router.put("/:id", updatePlan);
 
 // TOGGLE STATUS
-router.patch("/:id/status", togglePlanStatus);
+router.patch("/toggle/:id", togglePlanStatus);
 
 export default router;

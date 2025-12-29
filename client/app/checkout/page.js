@@ -1,8 +1,78 @@
 "use client";
+
+import { useEffect, useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import setting from "../../setting.json";
 
 export default function Checkout() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const planId = searchParams.get("plan");
+  const billing = searchParams.get("billing") || "monthly";
+
+  const [plan, setPlan] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  /* ---------------- FETCH PLAN ---------------- */
+  const loadPlan = async () => {
+    if (!planId) {
+      router.push("/pricing");
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        setting.api + `/api/plans/${planId}`
+      );
+      const data = await res.json();
+
+      if (!data.success) {
+        router.push("/pricing");
+        return;
+      }
+
+      setPlan(data.data);
+    } catch (err) {
+      console.error("Failed to load plan", err);
+      router.push("/pricing");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadPlan();
+  }, [planId]);
+
+  /* ---------------- PRICE CALC ---------------- */
+  const getBasePrice = () => {
+    if (!plan) return 0;
+    if (billing === "monthly") return plan.price;
+    // yearly = 12 months with 20% discount
+    return Math.round(plan.price * 12 * 0.8);
+  };
+
+  const price = getBasePrice();
+  const gst = Math.round(price * 0.18);
+  const total = price + gst;
+
+  if (loading) {
+    return (
+      <>
+        <Header />
+        <div className="container py-20 text-center">
+          <h3>Loading checkout...</h3>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  if (!plan) return null;
+
   return (
     <>
       <Header />
@@ -10,7 +80,7 @@ export default function Checkout() {
       <section className="py-16 bg-gray-50">
         <div className="max-w-5xl mx-auto px-4">
 
-          {/* Page Heading */}
+          {/* PAGE HEADER */}
           <div className="mb-10 text-center">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
               Checkout
@@ -22,7 +92,7 @@ export default function Checkout() {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-            {/* Left: Plan Details */}
+            {/* LEFT: PLAN DETAILS */}
             <div className="lg:col-span-2 bg-white rounded-2xl shadow p-6">
               <h2 className="text-xl font-semibold mb-4">
                 Selected Plan
@@ -32,32 +102,37 @@ export default function Checkout() {
                 <div className="flex justify-between items-center mb-4">
                   <div>
                     <h3 className="text-lg font-semibold text-gray-800">
-                      State Plan
+                      {plan.name}
                     </h3>
-                    <p className="text-gray-600 text-sm">
-                      Access state & constituency level reports
+                    <p className="text-gray-600 text-sm capitalize">
+                      {plan.report_limit} access · {billing}
                     </p>
                   </div>
-                  <span className="bg-blue-100 text-blue-600 text-sm font-medium px-3 py-1 rounded-full">
-                    Monthly
+
+                  <span className="bg-blue-100 text-blue-600 text-sm font-medium px-3 py-1 rounded-full capitalize">
+                    {billing}
                   </span>
                 </div>
 
                 <ul className="text-sm text-gray-700 space-y-2 mb-4">
-                  <li>✔ State & Constituency Reports</li>
-                  <li>✔ Election Trends</li>
-                  <li>✔ Priority Email Support</li>
+                  {plan.features?.length > 0 ? (
+                    plan.features.map((f, i) => (
+                      <li key={i}>{f}</li>
+                    ))
+                  ) : (
+                    <li>✔ Full platform access</li>
+                  )}
                 </ul>
 
                 <div className="flex justify-between items-center border-t pt-4">
                   <span className="text-gray-600">Plan Price</span>
                   <span className="text-xl font-bold text-gray-900">
-                    ₹1,499
+                    ₹{price}
                   </span>
                 </div>
               </div>
 
-              {/* User Info */}
+              {/* BILLING DETAILS */}
               <div className="mt-8">
                 <h2 className="text-xl font-semibold mb-4">
                   Billing Details
@@ -78,29 +153,30 @@ export default function Checkout() {
               </div>
             </div>
 
-            {/* Right: Order Summary */}
+            {/* RIGHT: ORDER SUMMARY */}
             <div className="bg-white rounded-2xl shadow p-6 h-fit">
               <h2 className="text-xl font-semibold mb-4">
                 Order Summary
               </h2>
 
               <div className="flex justify-between mb-3 text-gray-700">
-                <span>State Plan</span>
-                <span>₹1,499</span>
+                <span>{plan.name}</span>
+                <span>₹{price}</span>
               </div>
 
               <div className="flex justify-between mb-3 text-gray-700">
                 <span>GST (18%)</span>
-                <span>₹270</span>
+                <span>₹{gst}</span>
               </div>
 
               <div className="flex justify-between border-t pt-3 font-semibold text-gray-900">
                 <span>Total Payable</span>
-                <span>₹1,769</span>
+                <span>₹{total}</span>
               </div>
 
-              {/* Pay Button */}
+              {/* PAY BUTTON */}
               <button
+                onClick={() => alert("Razorpay integration next")}
                 className="w-full mt-6 bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition"
               >
                 Proceed to Payment

@@ -1,9 +1,44 @@
+
+
+import bcrypt from "bcryptjs";
 import Customer from "../models/Customer.js";
 
 export const createCustomer = async (req, res) => {
-    const customer = await Customer.create(req.body);
-    res.json({ success: true, data: customer });
+    try {
+        const { name, email, password, phone } = req.body;
+
+        // Check existing customer
+        const exists = await Customer.findOne({ email });
+        if (exists) {
+            return res.status(400).json({
+                success: false,
+                message: "Customer already exists",
+            });
+        }
+
+        // ✅ HASH PASSWORD
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const customer = await Customer.create({
+            name,
+            email,
+            password: hashedPassword,
+            phone,
+        });
+
+        res.json({
+            success: true,
+            message: "Customer created successfully",
+            data: customer,
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
 };
+
 
 export const getCustomers = async (req, res) => {
     const customers = await Customer.find().sort({ createdAt: -1 });

@@ -1,85 +1,169 @@
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Header from "../components/Header";
-import Footer from "../components/Footer"
+import Footer from "../components/Footer";
+
 export default function About() {
+    const router = useRouter();
+
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+    });
+
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+
+    // Handle input change
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    // Submit login form
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError("");
+        setLoading(true);
+
+        try {
+            const res = await fetch("http://127.0.0.1:5000/api/customer-auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok || !data.success) {
+                setError(data.message || "Invalid email or password");
+                return;
+            }
+
+            // ✅ Save token
+            localStorage.setItem(
+                "logininfo",
+                JSON.stringify({
+                    token: data.token,
+                    role: "customer",
+                })
+            );
+
+            // ✅ Redirect after login
+            router.push("/report-details");
+
+        } catch (err) {
+            setError("Server error. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
 
 
     return (
         <>
-
-
-
-
             <Header />
 
+            {/* Page Header */}
             <div className="container">
                 <div className="pages_heder">
                     <h2>Login Page</h2>
                     <ol className="breadcrumb">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="">Pages</a></li>
-                        <li><a href="login.html" className="active">Login Page</a></li>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="#">Pages</a></li>
+                        <li><a className="active">Login Page</a></li>
                     </ol>
                 </div>
             </div>
 
-
-
+            {/* Login Section */}
             <section className="login_area">
                 <div className="container">
                     <div className="login_inner">
-                        <form className="row login_from">
+                        <form className="row login_from" onSubmit={handleSubmit}>
+
+                            {error && (
+                                <div className="col-12 text-danger mb-3">
+                                    {error}
+                                </div>
+                            )}
+
                             <div className="form-group col-12">
-                                <input type="email" className="form-control" name="email" placeholder="Email Address" />
+                                <input
+                                    type="email"
+                                    className="form-control"
+                                    name="email"
+                                    placeholder="Email Address"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    required
+                                />
                             </div>
+
                             <div className="form-group col-12">
-                                <input type="password" className="form-control" name="password" placeholder="Password" />
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    name="password"
+                                    placeholder="Password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    required
+                                />
                             </div>
-                            {/* <div className="form-group col-12">
-                                <input type="text" className="form-control" name="code"
-                                    placeholder="Your Code ( 2fa if inavailed )" />
-                            </div> */}
+
                             <div className="form-group larg_btn col-12">
-                                <button className="defult_btn" type="submit">Login</button>
+                                <button
+                                    className="defult_btn"
+                                    type="submit"
+                                    disabled={loading}
+                                >
+                                    {loading ? "Logging in..." : "Login"}
+                                </button>
                             </div>
+
                             <div className="form-group col-sm-6">
                                 <a href="#" className="reset_btn">Reset Password</a>
                             </div>
+
                             <div className="form-group col-sm-6">
-                                <a href="register.html" className="reset_btn">Sign Up</a>
+                                <a href="/register" className="reset_btn">Sign Up</a>
                             </div>
+
                             <h4 className="col-12">or login in with</h4>
+
                             <div className="form-group col-sm-6">
-                                <a href="#" className="google_btn"><img src="images/google.png" alt="" />GOOGLE</a>
+                                <a href="#" className="google_btn">
+                                    <img src="/images/google.png" alt="" /> GOOGLE
+                                </a>
                             </div>
+
                             <div className="form-group col-sm-6">
-                                <a href="#" className="google_btn"><i className="fa fa-facebook"></i>Sign Up</a>
+                                <a href="#" className="google_btn">
+                                    <i className="fa fa-facebook"></i> Facebook
+                                </a>
                             </div>
+
                             <div className="col-12">
                                 <div className="custom-control custom-checkbox">
                                     <input type="checkbox" className="custom-control-input" id="check1" />
-                                    <label className="custom-control-label" htmlFor="check1">I agree to the mora.com <a href="#">Terms
-                                        of Service</a></label>
+                                    <label className="custom-control-label" htmlFor="check1">
+                                        I agree to the mora.com <a href="#">Terms of Service</a>
+                                    </label>
                                 </div>
                             </div>
+
                         </form>
                     </div>
                 </div>
             </section>
 
-            <section className="connect_with_us">
-                <div className="container">
-                    <h2>Connect with us</h2>
-                    <ul className="contact_with_socail">
-                        <li><a href="#"><i className="fa fa-google-plus"></i></a></li>
-                        <li><a href="#"><i className="fa fa-linkedin"></i></a></li>
-                        <li><a href="#"><i className="fa fa-instagram"></i></a></li>
-                        <li><a href="#"><i className="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i className="fa fa-youtube"></i></a></li>
-                    </ul>
-                </div>
-            </section>
             <Footer />
-
         </>
     );
 }

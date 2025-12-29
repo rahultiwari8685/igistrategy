@@ -39,6 +39,7 @@ const CustomerList = ({ onEdit }) => {
         <CTable responsive hover>
             <CTableHead>
                 <CTableRow>
+                    <CTableHeaderCell>SR.No</CTableHeaderCell>
                     <CTableHeaderCell>Name</CTableHeaderCell>
                     <CTableHeaderCell>Email</CTableHeaderCell>
                     <CTableHeaderCell>Phone</CTableHeaderCell>
@@ -48,8 +49,9 @@ const CustomerList = ({ onEdit }) => {
             </CTableHead>
 
             <CTableBody>
-                {customers.map((c) => (
+                {customers.map((c, index) => (
                     <CTableRow key={c._id}>
+                        <CTableDataCell>{index + 1}</CTableDataCell>
                         <CTableDataCell>{c.name}</CTableDataCell>
                         <CTableDataCell>{c.email}</CTableDataCell>
                         <CTableDataCell>{c.phone}</CTableDataCell>

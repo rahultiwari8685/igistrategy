@@ -6,21 +6,41 @@ import {
 import axios from 'axios';
 import { useReportStore } from './reportStore';
 import ReportFilters from './ReportFilters';
+import setting from "../../../setting.json"
 
 const ReportList = () => {
     const { filters, list, setList } = useReportStore();
 
-    const loadData = async () => {
-        const res = await axios.get(
-            process.env.REACT_APP_API_URL + '/reports',
-            { params: filters }
-        );
-        setList(res.data);
-    };
+    const getAllReport = async () => {
+
+        await fetch(setting.api + "/api/reports/getAllReport", {
+            method: "GET",
+            mode: "cors",
+            headers: {
+                // "Content-Type": "application/json",
+                // "Authorization": 'Bearer ' + JSON.parse(secureLocalStorage.getItem("logininfo")).token,
+            },
+
+        })
+            .then(response => response.json())
+            .then(u => {
+
+                if (u.status == false) {
+                    // secureLocalStorage.clear();
+                    navigate('/login');
+                } else {
+                    setList(u.data);
+                    console.log(u.data);
+                }
+            }
+            );
+
+    }
+
 
     useEffect(() => {
-        loadData();
-    }, [filters]);
+        getAllReport();
+    }, []);
 
     return (
         <>

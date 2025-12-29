@@ -79,6 +79,14 @@ const CustomerForm = ({ editCustomer, onSuccess }) => {
                         {...register("phone")}
                     />
                 </CCol>
+                <CCol md={6} className="mt-2">
+                    <CFormInput
+                        label="Phone"
+                        type="password"
+                        placeholder="Enter Password"
+                        {...register("password")}
+                    />
+                </CCol>
             </CRow>
 
             <div className="mt-3">
