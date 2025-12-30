@@ -55,7 +55,7 @@ export default function About() {
             );
 
             // ✅ Redirect after login
-            router.push("/report-details");
+            router.push("/report");
 
         } catch (err) {
             setError("Server error. Please try again.");

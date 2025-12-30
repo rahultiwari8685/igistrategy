@@ -12,7 +12,7 @@ export default function Report() {
 
     const categories = ["All", "political", "corporate"];
 
-    /* ------------------ FETCH REPORTS ------------------ */
+
     const loadReports = async () => {
         try {
             const res = await fetch(
@@ -36,13 +36,13 @@ export default function Report() {
         loadReports();
     }, []);
 
-    /* ------------------ PDF URL HELPER ------------------ */
+
     const getPdfUrl = (path) => {
         if (!path) return null;
         return setting.api + "/" + path.replace(/\\/g, "/");
     };
 
-    /* ------------------ FILTER ------------------ */
+
     const filteredReports =
         activeCategory === "All"
             ? reports
@@ -51,7 +51,7 @@ export default function Report() {
                     r.report_type?.toLowerCase() === activeCategory.toLowerCase()
             );
 
-    /* ------------------ REPORT CARD ------------------ */
+
     const ReportCard = ({ report }) => {
         const pdfUrl = getPdfUrl(report.preview_pdf);
 
