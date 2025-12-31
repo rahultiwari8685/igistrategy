@@ -72,8 +72,9 @@ export default function Checkout() {
     try {
       setProcessing(true);
 
-      // TEMP: customer id (later from auth)
-      const customerId = localStorage.getItem("customer_id");
+      const logininfo = JSON.parse(localStorage.getItem("logininfo"));
+      const customerId = logininfo?.customer_id;
+      console.log(logininfo);
 
       if (!customerId) {
         alert("Please login first");
@@ -81,7 +82,6 @@ export default function Checkout() {
         return;
       }
 
-      // 1️⃣ Create Razorpay Order
       const res = await fetch(
         `${setting.api}/api/payments/create-order`,
         {
@@ -98,11 +98,9 @@ export default function Checkout() {
 
       if (!data.success) {
         alert(data.message || "Failed to create order");
-        setProcessing(false);
         return;
       }
 
-      // 2️⃣ Open Razorpay Checkout
       const options = {
         key: data.key,
         amount: data.amount * 100,
@@ -113,9 +111,6 @@ export default function Checkout() {
         handler: function () {
           alert("Payment successful! Subscription activating...");
           router.push("/thank-you");
-        },
-        theme: {
-          color: "#2563eb"
         }
       };
 
@@ -124,13 +119,14 @@ export default function Checkout() {
 
     } catch (err) {
       console.error(err);
-      alert("Payment failed. Please try again.");
+      alert("Payment failed. Try again.");
     } finally {
       setProcessing(false);
     }
   };
 
-  /* ---------------- LOADING ---------------- */
+
+
   if (loading) {
     return (
       <>

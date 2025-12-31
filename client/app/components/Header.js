@@ -115,7 +115,7 @@ export default function Header() {
 
 
                                 <li>
-                                    <a className="nav-link" href="/report">Reports</a>
+                                    <a className="nav-link" href="/login">Reports</a>
                                 </li>
 
                                 {/* <li><a href="/login">Login</a></li> */}

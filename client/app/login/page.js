@@ -15,7 +15,7 @@ export default function About() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
-    // Handle input change
+
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -23,7 +23,7 @@ export default function About() {
         });
     };
 
-    // Submit login form
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
@@ -45,17 +45,19 @@ export default function About() {
                 return;
             }
 
-            // ✅ Save token
             localStorage.setItem(
                 "logininfo",
                 JSON.stringify({
                     token: data.token,
                     role: "customer",
+                    customer_id: data.customer.id,
+                    name: data.customer.name,
+                    email: data.customer.email,
                 })
             );
 
-            // ✅ Redirect after login
-            router.push("/report");
+
+            router.push("/dashboard");
 
         } catch (err) {
             setError("Server error. Please try again.");
@@ -69,7 +71,7 @@ export default function About() {
         <>
             <Header />
 
-            {/* Page Header */}
+
             <div className="container">
                 <div className="pages_heder">
                     <h2>Login Page</h2>
@@ -81,7 +83,7 @@ export default function About() {
                 </div>
             </div>
 
-            {/* Login Section */}
+
             <section className="login_area">
                 <div className="container">
                     <div className="login_inner">

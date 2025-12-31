@@ -11,7 +11,7 @@ export default function Pricing() {
     const [plans, setPlans] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    /* ---------------- FETCH PLANS ---------------- */
+
     const loadPlans = async () => {
         try {
             const res = await fetch(setting.api + "/api/plans/getAllPlans");
@@ -32,14 +32,12 @@ export default function Pricing() {
         loadPlans();
     }, []);
 
-    /* ---------------- PRICE CALC ---------------- */
     const getPrice = (price) => {
         if (billing === "monthly") return price;
         // yearly = 12 months - 20% discount
         return Math.round(price * 12 * 0.8);
     };
 
-    /* ---------------- MOST POPULAR LOGIC ---------------- */
     const isPopular = (plan) => plan.report_limit === "unlimited";
 
     return (
