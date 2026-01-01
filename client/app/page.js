@@ -6,6 +6,8 @@ import Link from "next/link";
 import Image from "next/image";
 import Header from "./components/Header";
 import { useEffect, useState } from "react";
+import PollContainer from "./components/poll/PollContainer";
+
 
 export default function Home() {
   useEffect(() => {
@@ -104,29 +106,12 @@ export default function Home() {
                 <div className="carousel-item">
                   <img src="images/slider_1.png" alt="First slide" style={{ opacity: 1 }} />
 
-                  {/* <ul className="special_share">
-                    <li><a href="#"><i className="fa fa-twitter" /></a></li>
-                    <li><a href="#"><i className="fa fa-linkedin" /></a></li>
-                  </ul> */}
-                  {/* <div className="slider_caption">
-                    <h6>February 21, 2018 , Updated 3 hours ago</h6>
-                    <a href="/news-details" className="heding">Lorem Ipsum is simply dummy text of the printing.</a>
-                    <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                    <a href="#" className="tag_btn">Investing</a>
-                  </div> */}
+
+
                 </div>
                 <div className="carousel-item active">
                   <img src="images/slider_2.png" alt="Second slide" style={{ opacity: 1 }} />
-                  {/* <ul className="special_share">
-                    <li><a href="#"><i className="fa fa-twitter" /></a></li>
-                    <li><a href="#"><i className="fa fa-linkedin" /></a></li>
-                  </ul>
-                  <div className="slider_caption">
-                    <h6>February 21, 2018 , Updated 3 hours ago</h6>
-                    <a href="/news-details" className="heding">Contrary to popular belief, Lorem Ipsum is not simply random text.</a>
-                    <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                    <a href="#" className="tag_btn">Investing</a>
-                  </div> */}
+
                 </div>
               </div>
               <a className="carousel-control-prev" href=".banner_slider" data-slide="prev"><i className="fa fa-angle-left" /></a>
@@ -142,15 +127,17 @@ export default function Home() {
         </div>
       </section>
 
+      <PollContainer />
+
 
       <section className="post_section">
 
         <div className="container">
           <div className="row post_section_inner">
-            {/* Left_sidebar */}
+
             <div className="col-lg-8 left_sidebar">
 
-              {/* Tranding Area Post */}
+
               <div className="row tranding_post_area">
                 <div className="col-12 tranding_tittle">
                   <h2>Blog</h2>
@@ -375,52 +362,7 @@ export default function Home() {
 
             {/* Right sidebar */}
             <div className="col-lg-4 right_sidebar">
-              <div className="btc_accordion">
-                {/* <div className="item">
-                  <a href="#" data-toggle="collapse" data-target="#collapseOne">Bitcoin(24h)</a>
-                  <div id="collapseOne" className="collapse show" data-parent=".btc_accordion">
-                    <div className="accordion_content">
-                      <h2>$15212.35</h2>
-                      <h4>EUR: €12632.32 <br />GBP: £11213.76</h4>
-                      <ul className="btc_list">
-                        <li>$15212</li>
-                        <li>$14212</li>
-                        <li>$13212</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div> */}
-                {/* <div className="item">
-                  <a href="#" data-toggle="collapse" className="collapsed" data-target="#collapseTwo">Etherume
-                    <span>$740.34</span></a>
-                  <div id="collapseTwo" className="collapse" data-parent=".btc_accordion">
-                    <div className="accordion_content">
-                      <h2>$15212.35</h2>
-                      <h4>EUR: €12632.32 <br />GBP: £11213.76</h4>
-                      <ul className="btc_list">
-                        <li>$15212</li>
-                        <li>$14212</li>
-                        <li>$13212</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div> */}
-                {/* <div className="item">
-                  <a href="#" className="collapsed" data-toggle="collapse" data-target="#collapseThree">Zcash
-                    <span>$546.83</span></a>
-                  <div id="collapseThree" className="collapse" data-parent=".btc_accordion">
-                    <div className="accordion_content">
-                      <h2>$15212.35</h2>
-                      <h4>EUR: €12632.32 <br />GBP: £11213.76</h4>
-                      <ul className="btc_list">
-                        <li>$15212</li>
-                        <li>$14212</li>
-                        <li>$13212</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div> */}
-              </div>
+
 
 
               <div className="latest_news_widget">
@@ -454,32 +396,7 @@ export default function Home() {
               </div>
 
 
-              {/* <div className="text_widget_area">
-                <div className="text_widget">
-                  <a href="news-details.html">Nam ornare ultricies dui in finibus. Vivamus in neque vel ipsum
-                    accumsan pharetra. </a>
-                  <h6>10:29, Press Releases</h6>
-                </div>
-                <div className="text_widget">
-                  <a href="news-details.html">Phasellus mauris tellus, suscipit ac lectus vitae, faucibus
-                    vehicula diam. </a>
-                  <h6>12:59, Press Releases</h6>
-                </div>
-                <div className="text_widget">
-                  <a href="news-details.html">Buffett Warns Investors That Safe-Looking Bonds Can Be Risky</a>
-                  <h6>2:37, Press Releases</h6>
-                </div>
-                <div className="text_widget m-0">
-                  <a href="news-details.html">Nam ornare ultricies dui in finibus. Vivamus in neque vel ipsum
-                    accumsan pharetra. </a>
-                  <h6 className="padding-bottom-0">11:38, Press Releases</h6>
-                </div>
-              </div> */}
 
-              {/* <div className="advertisement">
-                <a href="#"><img src="https://themazine.com/html/mora-blog/images/advertisement-1.jpg"
-                  alt="" /></a>
-              </div> */}
 
               <div className="video_widget">
                 {blogs
@@ -518,77 +435,6 @@ export default function Home() {
                   })}
               </div>
 
-
-              {/* <div className="advertisement_2">
-                <a href="#">
-                  <img src="https://themazine.com/html/mora-blog/images/advertisement-2.jpg" alt="" />
-                </a>
-              </div> */}
-
-              {/* <ul className="social_widget">
-                <li><a href="#"><i className="fa fa-facebook"></i></a></li>
-                <li><a href="#" className="twitter"><i className="fa fa-twitter"></i></a></li>
-                <li><a href="#" className="pinterest"><i className="fa fa-pinterest"></i></a></li>
-                <li><a href="#" className="linkedin"><i className="fa fa-linkedin"></i></a></li>
-                <li><a href="#" className="google"><i className="fa fa-google-plus"></i></a></li>
-                <li><a href="#" className="instagram"><i className="fa fa-instagram"></i></a></li>
-              </ul> */}
-
-              {/* <div className="tabs_widge">
-                <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                  <a className="active" id="nav-home-tab" data-toggle="tab" href="#technology"
-                    role="tab">Technology</a>
-                  <a id="nav-profile-tab" data-toggle="tab" href="#gaming" role="tab">Gaming</a>
-                </div>
-                <div className="tab-content" id="nav-tabContent">
-                  <div className="tab-pane fade show active text_widget_area" id="technology" role="tabpanel">
-
-                    <div className="text_widget">
-                      <a href="news-details.html">How to secure peace of mind and income that beats
-                        banks</a>
-                      <h6>10:29, Press Releases <span className="tech">Technology</span></h6>
-                    </div>
-                    <div className="text_widget">
-                      <a href="news-details.html">Token Launch Date Announced for Dether, World’s First
-                        Peer-To-Peer Ecosystem of Crypto Buyers, Sellers, and Shops</a>
-                      <h6>12:59, Press Releases <span className="hot">Hot</span></h6>
-                    </div>
-                    <div className="text_widget">
-                      <a href="news-details.html">Buffett Warns Investors That Safe-Looking Bonds Can Be
-                        Risky</a>
-                      <h6>2:37, Press Releases <span className="gaming">Gaming</span></h6>
-                    </div>
-                    <div className="text_widget m-0">
-                      <a href="news-details.html">Falls Below $16,400, Loses Nearly 15% in Major
-                        Correction</a>
-                      <h6 className="padding-bottom-0">11:38, Press Releases <span>Fashion</span></h6>
-                    </div>
-                  </div>
-                  <div className="tab-pane fade text_widget_area" id="gaming" role="tabpanel">
-
-                    <div className="text_widget">
-                      <a href="news-details.html">Buffett Warns Investors That Safe-Looking Bonds Can Be
-                        Risky</a>
-                      <h6>2:37, Press Releases <span className="gaming">Gaming</span></h6>
-                    </div>
-                    <div className="text_widget m-0">
-                      <a href="news-details.html">Falls Below $16,400, Loses Nearly 15% in Major
-                        Correction</a>
-                      <h6 className="padding-bottom-0">11:38, Press Releases <span>Fashion</span></h6>
-                    </div>
-                    <div className="text_widget">
-                      <a href="news-details.html">How to secure peace of mind and income that beats
-                        banks</a>
-                      <h6>10:29, Press Releases <span className="tech">Technology</span></h6>
-                    </div>
-                    <div className="text_widget">
-                      <a href="news-details.html">Token Launch Date Announced for Dether, World’s First
-                        Peer-To-Peer Ecosystem of Crypto Buyers, Sellers, and Shops</a>
-                      <h6>12:59, Press Releases <span className="hot">Hot</span></h6>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
             </div>
 
           </div>

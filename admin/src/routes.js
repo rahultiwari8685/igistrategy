@@ -4,6 +4,7 @@ const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Blog = React.lazy(() => import('./views/pages/blog/Blog'))
 const Reports = React.lazy(() => import('./views/pages/reports/Reports'))
 const Plans = React.lazy(() => import('./views/pages/plans/Plans'))
+const Polls = React.lazy(() => import('./views/pages/polls/Polls'))
 const Subscription = React.lazy(() => import('./views/pages/subscription/Subscriptions'))
 const Customers = React.lazy(() => import('./views/pages/customers/Customers'))
 const UpdateBlog = React.lazy(() => import('./views/pages/blog/UpdateBlog'))
@@ -28,6 +29,7 @@ const routes = [
   { path: '/reports', name: 'Reports', element: Reports },
   { path: '/customers', name: 'Customers', element: Customers },
   { path: '/plans', name: 'Plans', element: Plans },
+  { path: '/polls', name: 'Polls', element: Polls },
   { path: '/subscription', name: 'Subscription', element: Subscription },
   { path: '/UpdateBlog/:id', name: 'Update Blog', element: UpdateBlog },
   { path: '/PublishedBlog', name: 'Published Blog', element: PublishedBlog },

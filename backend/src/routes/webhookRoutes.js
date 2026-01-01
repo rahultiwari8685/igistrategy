@@ -3,7 +3,7 @@ import { razorpayWebhook } from "../controllers/webhookController.js";
 
 const router = express.Router();
 
-// Razorpay webhook
+
 router.post(
     "/razorpay",
     express.json({
@@ -14,4 +14,4 @@ router.post(
     razorpayWebhook
 );
 
-export default router; // ✅ THIS WAS MISSING
+export default router; 

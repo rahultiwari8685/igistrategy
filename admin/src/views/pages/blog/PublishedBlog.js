@@ -199,9 +199,9 @@ const PublishedNews = () => {
                 <CTableDataCell>{new Date(news.createdAt).toLocaleDateString()}</CTableDataCell>
 
                 <CTableDataCell>
-                  <CButton size="sm" color="primary" className="rounded-pill px-3 shadow-sm fw-semibold" onClick={() => handleEdit(news)}>
+                  <CButton size="sm" color="warning" className="rounded-pill px-3 shadow-sm fw-semibold" onClick={() => handleEdit(news)}>
                     <CIcon icon={cilPencil} /> Edit
-                  </CButton>{" "}
+                  </CButton>{"   "}
                   <CButton size="sm" color="danger" className="rounded-pill px-3 shadow-sm fw-semibold" onClick={() => handleDelete(news.id)}>
                     <CIcon icon={cilTrash} /> Delete
                   </CButton>

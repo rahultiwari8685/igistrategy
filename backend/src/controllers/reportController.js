@@ -24,7 +24,7 @@ export const createReport = async (req, res) => {
     }
 };
 
-/* ---------------- LIST + FILTER ---------------- */
+
 export const getReports = async (req, res) => {
     try {
         const filter = {};
@@ -46,13 +46,12 @@ export const getReports = async (req, res) => {
     }
 };
 
-/* ---------------- SINGLE ---------------- */
+
 export const getReportById = async (req, res) => {
     const report = await Report.findById(req.params.id);
     res.json({ status: true, data: report });
 };
 
-/* ---------------- UPDATE ---------------- */
 export const updateReport = async (req, res) => {
     try {
         const updateData = {
@@ -79,8 +78,89 @@ export const updateReport = async (req, res) => {
     }
 };
 
-/* ---------------- DELETE ---------------- */
 export const deleteReport = async (req, res) => {
     await Report.findByIdAndDelete(req.params.id);
     res.json({ status: true, message: "Deleted" });
 };
+
+import ReportAccess from "../models/ReportAccess.js";
+import Subscription from "../models/Subscription.js";
+import Plan from "../models/Plan.js";
+
+export const accessFullReport = async (req, res) => {
+    try {
+        const customerId = req.user.customerId;
+        const reportId = req.params.id;
+
+        /* ---------- CHECK REPORT ---------- */
+        const report = await Report.findById(reportId);
+        if (!report) {
+            return res.status(404).json({
+                success: false,
+                message: "Report not found"
+            });
+        }
+
+        /* ---------- CHECK ACTIVE SUBSCRIPTION ---------- */
+        const subscription = await Subscription.findOne({
+            customer_id: customerId,
+            status: "active",
+            end_date: { $gte: new Date() }
+        });
+
+        if (!subscription) {
+            return res.status(403).json({
+                success: false,
+                message: "Active subscription required"
+            });
+        }
+
+        const plan = await Plan.findById(subscription.plan_id);
+
+        /* ---------- CHECK REPORT LIMIT ---------- */
+        if (plan.report_limit !== "unlimited") {
+            const used = await ReportAccess.countDocuments({
+                customer_id: customerId,
+                plan_id: plan._id
+            });
+
+            if (used >= Number(plan.report_limit)) {
+                return res.status(403).json({
+                    success: false,
+                    message: "Report limit exceeded"
+                });
+            }
+        }
+
+        /* ---------- SAVE ACCESS (ONCE) ---------- */
+        const already = await ReportAccess.findOne({
+            customer_id: customerId,
+            report_id: reportId
+        });
+
+        if (!already) {
+            await ReportAccess.create({
+                customer_id: customerId,
+                report_id: reportId,
+                plan_id: plan._id
+            });
+        }
+
+        /* ---------- RETURN FULL REPORT ---------- */
+        res.json({
+            success: true,
+            data: {
+                title: report.title,
+                full_pdf: report.report_pdf
+            }
+        });
+
+    } catch (err) {
+        console.error("FULL REPORT ERROR:", err);
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    }
+};
+

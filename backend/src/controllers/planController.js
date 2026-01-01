@@ -1,8 +1,6 @@
 import Plan from "../models/Plan.js";
 
-/**
- * CREATE PLAN
- */
+
 export const createPlan = async (req, res) => {
     try {
         const {
@@ -13,7 +11,7 @@ export const createPlan = async (req, res) => {
             features
         } = req.body;
 
-        // BASIC VALIDATION
+
         if (!name || price === undefined || !billing_cycle || !report_limit) {
             return res.status(400).json({
                 success: false,
@@ -42,9 +40,7 @@ export const createPlan = async (req, res) => {
     }
 };
 
-/**
- * GET ALL PLANS
- */
+
 export const getPlans = async (req, res) => {
     try {
         const plans = await Plan.find().sort({ createdAt: -1 });
@@ -61,9 +57,7 @@ export const getPlans = async (req, res) => {
     }
 };
 
-/**
- * GET SINGLE PLAN
- */
+
 export const getPlanById = async (req, res) => {
     try {
         const plan = await Plan.findById(req.params.id);
@@ -87,9 +81,7 @@ export const getPlanById = async (req, res) => {
     }
 };
 
-/**
- * UPDATE PLAN
- */
+
 export const updatePlan = async (req, res) => {
     try {
         const plan = await Plan.findById(req.params.id);
@@ -101,7 +93,6 @@ export const updatePlan = async (req, res) => {
             });
         }
 
-        // UPDATE ONLY PROVIDED FIELDS
         Object.assign(plan, req.body);
         await plan.save();
 
@@ -118,9 +109,7 @@ export const updatePlan = async (req, res) => {
     }
 };
 
-/**
- * TOGGLE PLAN STATUS
- */
+
 export const togglePlanStatus = async (req, res) => {
     try {
         const plan = await Plan.findById(req.params.id);

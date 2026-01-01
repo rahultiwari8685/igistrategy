@@ -49,6 +49,7 @@ const ReportList = () => {
             <CTable bordered hover responsive>
                 <CTableHead>
                     <CTableRow>
+                        <CTableHeaderCell>SR.No</CTableHeaderCell>
                         <CTableHeaderCell>Type</CTableHeaderCell>
                         <CTableHeaderCell>Sub Type</CTableHeaderCell>
                         <CTableHeaderCell>Title</CTableHeaderCell>
@@ -59,8 +60,9 @@ const ReportList = () => {
                 </CTableHead>
 
                 <CTableBody>
-                    {list.map((item) => (
+                    {list.map((item, index) => (
                         <CTableRow key={item._id}>
+                            <CTableDataCell>{index + 1}</CTableDataCell>
                             <CTableDataCell>{item.report_type}</CTableDataCell>
                             <CTableDataCell>{item.sub_type}</CTableDataCell>
                             <CTableDataCell>{item.title}</CTableDataCell>

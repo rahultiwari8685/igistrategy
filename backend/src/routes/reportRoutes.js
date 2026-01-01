@@ -5,12 +5,15 @@ import {
     getReports,
     getReportById,
     updateReport,
-    deleteReport
+    deleteReport,
+    accessFullReport
 } from "../controllers/reportController.js";
+
+import { verifyCustomer } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-// CREATE
+
 router.post(
     "/saveReport",
     upload.fields([
@@ -20,13 +23,20 @@ router.post(
     createReport
 );
 
-// READ (LIST)
 router.get("/getAllReport", getReports);
 
-// READ (SINGLE)
+
+
+router.get(
+    "/:id/full",
+    verifyCustomer,
+    accessFullReport
+);
+
+
 router.get("/getReportById/:id", getReportById);
 
-// UPDATE
+
 router.put(
     "/:id",
     upload.fields([
@@ -36,7 +46,6 @@ router.put(
     updateReport
 );
 
-// DELETE
 router.delete("/:id", deleteReport);
 
 export default router;

@@ -4,21 +4,17 @@ import { CNavGroup, CNavItem } from '@coreui/react'
 
 import {
   cilSpeedometer,
-  cilBullhorn,
-  cilFolder,
   cilPeople,
-  cilSettings,
-  cilFile,
-  cilMap,
-  cilRss,
   cilNewspaper,
   cilPlus,
   cilCheckCircle,
   cilPencil,
   cilTrash,
-  cilChart,
   cilUser,
   cilTags,
+  cilFile,
+  cilOptions,
+  cilChart,
 } from '@coreui/icons'
 
 const _nav = [
@@ -29,11 +25,9 @@ const _nav = [
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
   },
 
-
   {
     component: CNavGroup,
     name: 'Blog',
-    to: '/blog',
     icon: <CIcon icon={cilNewspaper} customClassName="nav-icon" />,
     items: [
       {
@@ -44,19 +38,19 @@ const _nav = [
       },
       {
         component: CNavItem,
-        name: 'Published Blog',
+        name: 'Published Blogs',
         to: '/PublishedBlog',
         icon: <CIcon icon={cilCheckCircle} customClassName="nav-icon" />,
       },
       {
         component: CNavItem,
-        name: 'Draft Blog',
+        name: 'Draft Blogs',
         to: '/DraftBlog',
         icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
       },
       {
         component: CNavItem,
-        name: 'Deleted Blog',
+        name: 'Deleted Blogs',
         to: '/DeletedBlog',
         icon: <CIcon icon={cilTrash} customClassName="nav-icon" />,
       },
@@ -66,54 +60,44 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Users',
-    to: '/Users',
+    to: '/users',
     icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
   },
+
   {
     component: CNavItem,
-    name: 'Category',
-    to: '/Category',
+    name: 'Categories',
+    to: '/category',
     icon: <CIcon icon={cilTags} customClassName="nav-icon" />,
   },
+
   {
     component: CNavItem,
     name: 'Reports',
     to: '/reports',
-    icon: <CIcon icon={cilTags} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilFile} customClassName="nav-icon" />,
   },
+
+  {
+    component: CNavItem,
+    name: 'Polls',
+    to: '/polls',
+    icon: <CIcon icon={cilOptions} customClassName="nav-icon" />,
+  },
+
   {
     component: CNavItem,
     name: 'Customers',
     to: '/customers',
-    icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
   },
 
   {
-    component: CNavGroup,
-    name: 'Subscription',
-    to: '/subscription',
-    icon: <CIcon icon={cilNewspaper} customClassName="nav-icon" />,
-    items: [
-      // {
-      //   component: CNavItem,
-      //   name: 'Subscription',
-      //   to: '/subscription',
-      //   icon: <CIcon icon={cilPlus} customClassName="nav-icon" />,
-      // },
-      {
-        component: CNavItem,
-        name: 'Plans',
-        to: '/plans',
-        icon: <CIcon icon={cilPlus} customClassName="nav-icon" />,
-      }
-
-
-    ],
+    component: CNavItem,
+    name: 'Plans',
+    to: '/plans',
+    icon: <CIcon icon={cilChart} customClassName="nav-icon" />,
   },
-
-
-
-
 ]
 
 export default _nav

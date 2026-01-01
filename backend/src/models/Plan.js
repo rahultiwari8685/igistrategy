@@ -22,7 +22,7 @@ const planSchema = new mongoose.Schema(
 
         report_limit: {
             type: String,
-            required: true // "5" | "50" | "unlimited"
+            required: true
         },
 
         features: {

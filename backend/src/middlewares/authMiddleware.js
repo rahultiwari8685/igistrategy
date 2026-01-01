@@ -15,7 +15,6 @@ export const verifyCustomer = (req, res, next) => {
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        // role check
         if (decoded.role !== "customer") {
             return res.status(403).json({
                 success: false,
@@ -23,7 +22,6 @@ export const verifyCustomer = (req, res, next) => {
             });
         }
 
-        // attach user to request
         req.user = {
             customerId: decoded.customerId,
             email: decoded.email,

@@ -5,9 +5,6 @@ export default function Blog() {
     return (
         <>
 
-
-
-
             <Header />
 
             <div className="container">

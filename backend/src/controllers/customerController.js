@@ -7,7 +7,7 @@ export const createCustomer = async (req, res) => {
     try {
         const { name, email, password, phone } = req.body;
 
-        // Check existing customer
+
         const exists = await Customer.findOne({ email });
         if (exists) {
             return res.status(400).json({
@@ -16,7 +16,7 @@ export const createCustomer = async (req, res) => {
             });
         }
 
-        // ✅ HASH PASSWORD
+
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const customer = await Customer.create({

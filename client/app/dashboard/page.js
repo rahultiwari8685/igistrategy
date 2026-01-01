@@ -57,7 +57,7 @@ export default function Dashboard() {
             <section className="py-16 bg-gray-50">
                 <div className="max-w-7xl mx-auto px-4">
 
-                    {/* WELCOME */}
+
                     <div className="mb-10">
                         <h1 className="text-3xl font-bold text-gray-900">
                             Welcome back, {customer.name} 👋
@@ -67,10 +67,10 @@ export default function Dashboard() {
                         </p>
                     </div>
 
-                    {/* STATS GRID */}
+
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
 
-                        {/* SUBSCRIPTION */}
+
                         <div className="bg-white rounded-2xl shadow p-6">
                             <h4 className="text-sm text-gray-500 mb-2">Subscription</h4>
                             <h2 className="text-xl font-semibold text-gray-900">
@@ -111,11 +111,13 @@ export default function Dashboard() {
                             </p>
 
                             <Link
-                                href="/report"
+                                href="/my-reports"
                                 className="inline-block mt-4 text-blue-600 font-medium text-sm"
                             >
-                                View Reports →
+                                View My Reports →
                             </Link>
+
+
                         </div>
 
                         {/* QUICK ACTION */}

@@ -4,7 +4,6 @@ import path from "path";
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
 
-        // Dynamic folder by module
         if (file.mimetype === "application/pdf") {
             cb(null, "uploads/reports");
         } else if (file.mimetype.startsWith("image/")) {

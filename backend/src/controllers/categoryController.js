@@ -1,7 +1,7 @@
 import Category from "../models/Category.js";
 import { slugify } from "../helpers/slugify.js";
 
-// CREATE CATEGORY
+
 export const createCategory = async (req, res) => {
     try {
         const { name, parentCategory, metaTitle, metaDescription, showInMenu } = req.body;
@@ -31,7 +31,7 @@ export const createCategory = async (req, res) => {
     }
 };
 
-// GET ALL CATEGORIES
+
 export const getAllCategories = async (req, res) => {
     try {
         const categories = await Category.find()
@@ -48,7 +48,7 @@ export const getAllCategories = async (req, res) => {
     }
 };
 
-// UPDATE CATEGORY
+
 export const updateCategory = async (req, res) => {
     try {
         const { _id, name, parentCategory, metaTitle, metaDescription, showInMenu } = req.body;
@@ -86,7 +86,7 @@ export const updateCategory = async (req, res) => {
     }
 };
 
-// DELETE CATEGORY
+
 export const deleteCategory = async (req, res) => {
     try {
         const { _id } = req.body;

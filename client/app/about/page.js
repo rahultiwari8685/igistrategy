@@ -6,9 +6,6 @@ export default function About() {
     return (
         <>
 
-
-
-
             <Header />
             <div class="container">
                 <div class="pages_heder">
@@ -19,7 +16,6 @@ export default function About() {
                     </ol>
                 </div>
             </div>
-
 
 
             <section class="about_content">

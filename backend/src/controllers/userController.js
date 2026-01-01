@@ -2,13 +2,11 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 export const saveUser = async (req, res) => {
     try {
-        // const user = await User.create(req.body);
 
 
         const { name, email, phone, password } = req.body;
 
 
-        // Multer adds file info to req.file
         const profileImage = req.file ? req.file.filename : "";
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -69,7 +67,6 @@ export const updateUser = async (req, res) => {
             });
         }
 
-        // Find existing user
         const existingUser = await User.findById(_id);
         if (!existingUser) {
             return res.status(404).json({
@@ -78,13 +75,10 @@ export const updateUser = async (req, res) => {
             });
         }
 
-        // If new profileImage uploaded, use it
-        // else keep old image
         const profileImage = req.file
             ? req.file.filename
             : existingUser.profileImage;
 
-        // Update user data
         const updatedUser = await User.findByIdAndUpdate(
             _id,
             {

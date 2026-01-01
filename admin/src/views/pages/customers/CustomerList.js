@@ -10,7 +10,7 @@ import {
     CBadge
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
-import { cilPencil, cilBan } from "@coreui/icons";
+import { cilPencil, cilBan, cilTrash } from "@coreui/icons";
 import axios from "axios";
 import setting from "../../../setting.json";
 
@@ -63,19 +63,21 @@ const CustomerList = ({ onEdit }) => {
                         <CTableDataCell>
                             <CButton
                                 size="sm"
-                                color="info"
-                                className="me-2"
+                                color="warning"
+
+                                className="rounded-pill px-3 shadow-sm fw-semibold"
                                 onClick={() => onEdit(c)}
                             >
                                 <CIcon icon={cilPencil} />
-                            </CButton>
+                            </CButton>{" "}
 
                             <CButton
                                 size="sm"
-                                color="warning"
+                                color="danger"
+                                className="rounded-pill px-3 shadow-sm fw-semibold"
                                 onClick={() => toggleStatus(c._id)}
                             >
-                                <CIcon icon={cilBan} />
+                                <CIcon icon={cilTrash} style={{ marginRight: '5px' }} />Delete
                             </CButton>
                         </CTableDataCell>
                     </CTableRow>

@@ -14,6 +14,7 @@ import paymentRoutes from "./routes/paymentRoutes.js"
 import webhookRoutes from "./routes/webhookRoutes.js"
 
 import customerAuthRoutes from "./routes/customerAuth.js";
+import pollRoutes from "./routes/pollRoutes.js"
 
 import cors from "cors";
 
@@ -43,6 +44,8 @@ app.use("/api/webhooks", webhookRoutes);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/customer-auth", customerAuthRoutes);
+
+app.use("/api/polls", pollRoutes);
 
 
 

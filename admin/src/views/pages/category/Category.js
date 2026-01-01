@@ -107,7 +107,7 @@ const Category = () => {
 
         if (editingCategory) {
             endpoint = "/api/categories/updateCategory";
-            db.id = editingCategory.id; // ✅ correct way
+            db.id = editingCategory.id;
         }
 
         try {
@@ -130,7 +130,7 @@ const Category = () => {
                 );
                 getAllCategory();
                 setEditingCategory(null);
-                setVisible(false); // ✅ close offcanvas
+                setVisible(false);
             } else {
                 alert(result.message || "Failed to save category");
             }
@@ -141,10 +141,10 @@ const Category = () => {
 
 
     const handleEdit = (cat) => {
-        setEditingCategory(cat); // store full object
+        setEditingCategory(cat);
         setVisible(true);
 
-        // Prefill form fields
+
         setValue("name", cat.name);
         setValue("parent", cat.parent);
         setValue("slug", cat.slug);
@@ -171,7 +171,7 @@ const Category = () => {
                 mode: "cors",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`, // ✅ send token
+                    Authorization: `Bearer ${token}`,
                 },
             });
 
@@ -179,7 +179,7 @@ const Category = () => {
                 console.error("Delete failed:", response.status);
             } else {
                 console.log("User deleted:", await response.json());
-                getAllCategory(); // ✅ refresh after delete
+                getAllCategory();
             }
         } catch (err) {
             console.error("Error deleting user:", err);
@@ -217,9 +217,7 @@ const Category = () => {
                             <CTableRow>
                                 <CTableHeaderCell>#</CTableHeaderCell>
                                 <CTableHeaderCell>Name</CTableHeaderCell>
-                                {/* <CTableHeaderCell>Slug</CTableHeaderCell> */}
                                 <CTableHeaderCell>Parent</CTableHeaderCell>
-                                {/* <CTableHeaderCell>Type</CTableHeaderCell> */}
                                 <CTableHeaderCell>Actions</CTableHeaderCell>
                             </CTableRow>
                         </CTableHead>
@@ -231,11 +229,9 @@ const Category = () => {
                                         <CTableRow key={cat.id}>
                                             <CTableDataCell>{actualIndex + 1}</CTableDataCell>
                                             <CTableDataCell>{cat.name}</CTableDataCell>
-                                            {/* <CTableDataCell>{cat.slug}</CTableDataCell> */}
                                             <CTableDataCell>
                                                 {cat?.parentCategory?.name || "—"}
                                             </CTableDataCell>
-                                            {/* <CTableDataCell>{cat.type == "1" ? "Normal" : "Special"}</CTableDataCell> */}
 
                                             <CTableDataCell>
                                                 <CButton

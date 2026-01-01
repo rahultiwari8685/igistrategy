@@ -13,7 +13,7 @@ export default function ShopDetails() {
     const [report, setReport] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    /* ---------------- FETCH REPORT DETAILS ---------------- */
+
     const loadReport = async () => {
         try {
             const res = await fetch(
@@ -38,7 +38,6 @@ export default function ShopDetails() {
         if (id) loadReport();
     }, [id]);
 
-    /* ---------------- PDF URL HELPER ---------------- */
     const getPdfUrl = (path) => {
         if (!path) return null;
         return setting.api + "/" + path.replace(/\\/g, "/");
@@ -66,7 +65,6 @@ export default function ShopDetails() {
                 <div className="container">
                     <div className="row">
 
-                        {/* -------- LEFT SIDEBAR (FILTERS) -------- */}
                         <div className="col-lg-3 shop_right_sidebar">
                             <div className="s_widget">
                                 <h4>Report Filters</h4>
@@ -91,11 +89,9 @@ export default function ShopDetails() {
                             </div>
                         </div>
 
-                        {/* -------- REPORT DETAILS -------- */}
                         <div className="col-lg-9 shop_left_sidebar">
                             <div className="row">
 
-                                {/* PDF PREVIEW */}
                                 <div className="col-md-6 min_img">
                                     {report.preview_pdf ? (
                                         <iframe
@@ -116,7 +112,6 @@ export default function ShopDetails() {
                                     )}
                                 </div>
 
-                                {/* DETAILS */}
                                 <div className="col-md-6 product_details">
                                     <h2>{report.title}</h2>
                                     <h4>Category: {report.report_type}</h4>

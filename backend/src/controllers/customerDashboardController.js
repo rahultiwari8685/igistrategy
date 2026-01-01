@@ -12,14 +12,12 @@ export const getCustomerDashboard = async (req, res) => {
 
         const customerId = req.user.customerId;
 
-        /* ---------- CUSTOMER ---------- */
         const customer = await Customer.findById(customerId).select("name email");
 
         if (!customer) {
             throw new Error("Customer not found");
         }
 
-        /* ---------- SUBSCRIPTION ---------- */
         const subscription = await Subscription.findOne({
             customer_id: customerId,
             status: "active",
