@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -12,11 +14,25 @@ export default function Header() {
         submenu: false,
     });
 
+    const router = useRouter();
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        const info = JSON.parse(localStorage.getItem("logininfo"));
+        setUser(info);
+    }, []);
+
     const toggleDropdown = (name) => {
         setDropdowns({
             ...dropdowns,
             [name]: !dropdowns[name],
         });
+    };
+
+
+    const handleLogout = () => {
+        localStorage.removeItem("logininfo");
+        router.replace("/login"); // prevents back button access
     };
 
     return (
@@ -52,81 +68,49 @@ export default function Header() {
                         <div className={`navbar-collapse navbar_supported ${menuOpen ? "show" : ""}`}>
                             <ul className="navbar-nav">
 
-
-                                {/* <li className="dropdown">
-                                    <a
-                                        className="nav-link dropdown-toggle"
-                                        onClick={() => toggleDropdown("home")}
-                                    >
-                                        Home
-                                    </a>
-                                    {dropdowns.home && (
-                                        <ul className="dropdown-menu show">
-                                            <li><a href="/">Home Version 1</a></li>
-                                            <li><a href="/index-2">Home Version 2</a></li>
-                                        </ul>
-                                    )}
-                                </li> */}
-
                                 <li>
-                                    <a className="nav-link" href="/">Home</a>
+                                    <Link className="nav-link" href="/">Home</Link>
                                 </li>
 
 
                                 <li>
-                                    <a className="nav-link" href="/about">About us</a>
+                                    <Link className="nav-link" href="/about">About us</Link>
                                 </li>
-
-
-                                <li className="dropdown">
-                                    <a
-                                        className="nav-link dropdown-toggle"
-                                        onClick={() => toggleDropdown("blog")}
-                                    >
-                                        Blog
-                                    </a>
-                                    {dropdowns.blog && (
-                                        <ul className="dropdown-menu show">
-                                            <li><a href="/blog">Blog list</a></li>
-                                            <li><a href="/blog-details">Blog Details</a></li>
-                                            {/* <li><a href="/news-2">News v2</a></li>
-                                            <li><a href="/news-3">News v3</a></li>
-                                            <li><a href="/news-details">News details</a></li>
-                                            <li><a href="/video-details">Video details</a></li> */}
-                                        </ul>
-                                    )}
-                                </li>
-
-
-                                {/* <li className="dropdown">
-                                    <a
-                                        className="nav-link dropdown-toggle"
-                                        onClick={() => toggleDropdown("shop")}
-                                    >
-                                        Reports
-                                    </a>
-                                    {dropdowns.shop && (
-                                        <ul className="dropdown-menu show">
-                                            <li><a href="/shop">Shop</a></li>
-                                            <li><a href="/shop-details">Shop Details</a></li>
-                                        </ul>
-                                    )}
-                                </li> */}
 
 
                                 <li>
-                                    <a className="nav-link" href="/login">Reports</a>
+                                    <Link className="nav-link" href="/blog">Blog</Link>
                                 </li>
 
-                                {/* <li><a href="/login">Login</a></li> */}
 
-
-
-                                {/* CONTACT */}
                                 <li>
-                                    <a className="nav-link" href="/contact">Contact us</a>
+                                    <Link className="nav-link" href="/login">Reports</Link>
                                 </li>
-                                <li><a href="/login">Login</a></li>
+
+
+                                <li>
+                                    <Link className="nav-link" href="/contact">Contact us</Link>
+                                </li>
+
+                                {user?.token ? (
+                                    <>
+                                        <li>
+                                            <Link className="nav-link" href="/dashboard">Dashboard</Link>
+                                        </li>
+                                        <li>
+                                            <button
+                                                onClick={handleLogout}
+                                            >
+                                                Logout
+                                            </button>
+                                        </li>
+                                    </>
+                                ) : (
+                                    <li>
+                                        <Link href="/login">Login</Link>
+
+                                    </li>
+                                )}
 
 
                             </ul>

@@ -77,7 +77,7 @@ export default function About() {
                     <h2>Login Page</h2>
                     <ol className="breadcrumb">
                         <li><a href="/">Home</a></li>
-                        <li><a href="#">Pages</a></li>
+                        {/* <li><a href="#">Pages</a></li> */}
                         <li><a className="active">Login Page</a></li>
                     </ol>
                 </div>
@@ -137,7 +137,7 @@ export default function About() {
                                 <a href="/register" className="reset_btn">Sign Up</a>
                             </div>
 
-                            <h4 className="col-12">or login in with</h4>
+                            {/* <h4 className="col-12">or login in with</h4>
 
                             <div className="form-group col-sm-6">
                                 <a href="#" className="google_btn">
@@ -149,16 +149,9 @@ export default function About() {
                                 <a href="#" className="google_btn">
                                     <i className="fa fa-facebook"></i> Facebook
                                 </a>
-                            </div>
+                            </div> */}
 
-                            <div className="col-12">
-                                <div className="custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="check1" />
-                                    <label className="custom-control-label" htmlFor="check1">
-                                        I agree to the mora.com <a href="#">Terms of Service</a>
-                                    </label>
-                                </div>
-                            </div>
+
 
                         </form>
                     </div>

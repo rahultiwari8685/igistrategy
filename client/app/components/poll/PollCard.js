@@ -45,24 +45,25 @@ const PollCard = ({ poll, onVoted }) => {
     };
 
     return (
-        <div className="bg-white rounded-2xl shadow p-6">
-            <h2 className="text-2xl font-bold mb-4">{poll.question}</h2>
+        <div className="border-l-4 border-blue-600 bg-white p-6 shadow-sm">
+            <h3 className="text-lg font-semibold mb-4">
+                {poll.question}
+            </h3>
 
-            <div className="space-y-3 mb-6">
+            <div className="space-y-2 mb-4">
                 {poll.options.map((opt, i) => (
                     <label
                         key={i}
-                        className={`flex items-center p-3 border rounded-lg cursor-pointer
-              ${selected === i ? "border-blue-600 bg-blue-50" : ""}`}
+                        className={`flex items-center gap-3 p-2 rounded cursor-pointer
+                    ${selected === i ? "bg-blue-50" : "hover:bg-gray-50"}`}
                     >
                         <input
                             type="radio"
                             name="poll"
-                            className="mr-3"
                             checked={selected === i}
                             onChange={() => setSelected(i)}
                         />
-                        {opt.text}
+                        <span>{opt.text}</span>
                     </label>
                 ))}
             </div>
@@ -70,11 +71,12 @@ const PollCard = ({ poll, onVoted }) => {
             <button
                 onClick={vote}
                 disabled={submitting}
-                className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium"
+                className="text-sm bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700"
             >
-                {submitting ? "Submitting..." : "Vote Now"}
+                Vote
             </button>
         </div>
+
     );
 };
 

@@ -67,6 +67,9 @@ export default function Home() {
 
 
 
+
+
+
   return (
     <>
 
@@ -127,7 +130,6 @@ export default function Home() {
         </div>
       </section>
 
-      <PollContainer />
 
 
       <section className="post_section">
@@ -318,6 +320,8 @@ export default function Home() {
                 </div>
 
 
+
+
                 {fashionBlogs.slice(0, 4).map((item) => (
                   <div className="col-md-6" key={item._id}>
                     <div className="tranding_post">
@@ -363,7 +367,7 @@ export default function Home() {
             {/* Right sidebar */}
             <div className="col-lg-4 right_sidebar">
 
-
+              <PollContainer />
 
               <div className="latest_news_widget">
                 <h2>Trending News</h2>

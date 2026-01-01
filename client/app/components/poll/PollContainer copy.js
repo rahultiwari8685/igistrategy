@@ -2,18 +2,17 @@
 
 import { useEffect, useState } from "react";
 import setting from "../../../setting.json";
-import EditorialPoll from "./EditorialPoll";
-import EditorialPollResult from "./EditorialPollResult";
+import StoryPoll from "./StoryPoll";
+import StoryPollResult from "./StoryPollResult";
 
 const PollContainer = () => {
     const [poll, setPoll] = useState(null);
+    const [voted, setVoted] = useState(false);
+    const [selectedIndex, setSelectedIndex] = useState(null);
+    const [results, setResults] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    const [voted, setVoted] = useState(false);
-    const [results, setResults] = useState(null);
-    const [selectedIndex, setSelectedIndex] = useState(null);
-
-    /* LOAD ACTIVE POLL */
+    /* FETCH ACTIVE POLL */
     useEffect(() => {
         const loadPoll = async () => {
             try {
@@ -24,7 +23,7 @@ const PollContainer = () => {
                     setPoll(data.data);
                 }
             } catch (err) {
-                console.error("Failed to load poll", err);
+                console.error("Poll load failed", err);
             } finally {
                 setLoading(false);
             }
@@ -51,23 +50,16 @@ const PollContainer = () => {
     if (loading || !poll) return null;
 
     return (
-        <section className="py-12 bg-gray-50">
-            <div className="max-w-4xl mx-auto px-4">
-
-                {!voted ? (
-                    <EditorialPoll
-                        poll={poll}
-                        onVoted={handleVoted}
-                    />
-                ) : (
-                    <EditorialPollResult
-                        poll={poll}
-                        results={results}
-                        selectedIndex={selectedIndex}
-                    />
-                )}
-
-            </div>
+        <section className="container my-5">
+            {!voted ? (
+                <StoryPoll poll={poll} onVoted={handleVoted} />
+            ) : (
+                <StoryPollResult
+                    poll={poll}
+                    results={results}
+                    selectedIndex={selectedIndex}
+                />
+            )}
         </section>
     );
 };
