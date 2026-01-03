@@ -15,7 +15,7 @@ import webhookRoutes from "./routes/webhookRoutes.js"
 
 import customerAuthRoutes from "./routes/customerAuth.js";
 import pollRoutes from "./routes/pollRoutes.js"
-
+import liveRoutes from "./routes/liveRoutes.js"
 import cors from "cors";
 
 const app = express();
@@ -46,6 +46,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/customer-auth", customerAuthRoutes);
 
 app.use("/api/polls", pollRoutes);
+
+app.use("/api/live", liveRoutes);
+
 
 
 

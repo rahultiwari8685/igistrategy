@@ -7,6 +7,7 @@ import Image from "next/image";
 import Header from "./components/Header";
 import { useEffect, useState } from "react";
 import PollContainer from "./components/poll/PollContainer";
+import YouTubeLive from "./components/YouTubeLive";
 
 
 export default function Home() {
@@ -367,7 +368,9 @@ export default function Home() {
             {/* Right sidebar */}
             <div className="col-lg-4 right_sidebar">
 
-              <PollContainer />
+              {/* <PollContainer /> */}
+              <YouTubeLive />
+
 
               <div className="latest_news_widget">
                 <h2>Trending News</h2>
