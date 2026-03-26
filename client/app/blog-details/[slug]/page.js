@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Header from "../../components/Header";
+import setting from "../../../setting.json";
 
 export default function BlogDetails() {
   const { slug } = useParams();
@@ -10,7 +11,7 @@ export default function BlogDetails() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/api/blogs/${slug}`)
+    fetch(`${setting.json}/api/blogs/${slug}`)
       .then((res) => res.json())
       .then((res) => {
         setBlog(res.data);
@@ -41,7 +42,7 @@ export default function BlogDetails() {
 
               {blog.thumbnail && (
                 <img
-                  src={`http://localhost:5000/uploads/images/${blog.thumbnail}`}
+                  src={`${setting.json}/uploads/images/${blog.thumbnail}`}
                   alt={blog.title}
                 />
               )}

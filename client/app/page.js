@@ -1,4 +1,3 @@
-// app/page.js
 "use client";
 
 import Script from "next/script";
@@ -8,6 +7,7 @@ import Header from "./components/Header";
 import { useEffect, useState } from "react";
 import PollContainer from "./components/poll/PollContainer";
 import YouTubeLive from "./components/YouTubeLive";
+import setting from "../setting.json";
 
 export default function Home() {
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function Home() {
   const fashionBlogs = blogs.filter((b) => b.videoType !== "1").slice(0, 4);
 
   useEffect(() => {
-    fetch("https://igistrategy.com/api/blogs/getAllBlog", {
+    fetch(setting.json + "/api/blogs/getAllBlog", {
       method: "GET",
       mode: "cors",
       headers: {
@@ -195,7 +195,7 @@ export default function Home() {
                         <img
                           src={
                             item.thumbnail
-                              ? `http://127.0.0.1:5000/uploads/images/${item.thumbnail}`
+                              ? `${setting.api}/uploads/images/${item.thumbnail}`
                               : "https://via.placeholder.com/400x300?text=No+Image"
                           }
                           alt={item.title}
@@ -245,10 +245,18 @@ export default function Home() {
                       >
                         <div className="feture_img">
                           <a href={`/blog-details/${item.slug}`}>
+                            {/* <img
+                              src={
+                                item.thumbnail
+                                  ? `https://api.igistrategy.com/uploads/images/${item.thumbnail}`
+                                  : "https://via.placeholder.com/400x300?text=No+Image"
+                              }
+                              alt={item.title}
+                            /> */}
                             <img
                               src={
                                 item.thumbnail
-                                  ? `http://localhost:5000/uploads/images/${item.thumbnail}`
+                                  ? `${setting.api}/uploads/images/${item.thumbnail}`
                                   : "https://via.placeholder.com/400x300?text=No+Image"
                               }
                               alt={item.title}
@@ -317,7 +325,7 @@ export default function Home() {
                       : null;
 
                     const thumb = item.thumbnail
-                      ? `http://localhost:5000/uploads/images/${item.thumbnail}`
+                      ? `${setting.api}/uploads/images/${item.thumbnail}`
                       : youtubeThumb ||
                         "https://via.placeholder.com/600x400?text=No+Image";
 
@@ -391,7 +399,7 @@ export default function Home() {
                         <img
                           src={
                             item.thumbnail
-                              ? `http://localhost:5000/uploads/images/${item.thumbnail}`
+                              ? `${setting.api}/uploads/images/${item.thumbnail}`
                               : "https://via.placeholder.com/400x300?text=No+Image"
                           }
                           alt={item.title}
@@ -435,7 +443,7 @@ export default function Home() {
                   .slice(0, 3)
                   .map((item, index) => {
                     const imgSrc = item.thumbnail
-                      ? `http://localhost:5000/uploads/images/${item.thumbnail}`
+                      ? `${setting.api}/uploads/images/${item.thumbnail}`
                       : "https://via.placeholder.com/300x200?text=No+Image";
 
                     return (
@@ -472,7 +480,7 @@ export default function Home() {
                     const thumbnail = id
                       ? `https://img.youtube.com/vi/${id}/maxresdefault.jpg`
                       : video.thumbnail
-                        ? `http://localhost:5000/uploads/images/${video.thumbnail}`
+                        ? `${setting.api}/uploads/images/${video.thumbnail}`
                         : "https://via.placeholder.com/400x250?text=No+Video";
 
                     return (
@@ -542,7 +550,7 @@ export default function Home() {
             <div className="col-lg-5 col-md-6 footer_logo">
               {/* <a href="/"><img src="https://themazine.com/html/mora-blog/images/logo.png" alt="" /></a> */}
               <h6 className="kyr-ground" style={{ color: "white" }}>
-                Know Your Reality
+                IGI Strategy
               </h6>
               <p>
                 Established in 2013 as the first cloud mining provider, Blog has
@@ -551,7 +559,10 @@ export default function Home() {
               </p>
               <address>
                 <span>LOCATION</span>
-                <p>12/4 New Yourk R Block Street 2101 USA</p>
+                <p>
+                  19 B, Vidhansabha Marg (Near Akashwani) Hazratganj Lucnkow,
+                  226001
+                </p>
               </address>
             </div>
 
@@ -602,7 +613,7 @@ export default function Home() {
         </div>
         <div className="copy_right">
           <p>
-            Copyright © 2025 <a href="#">Know Your Reality</a> Developed by{" "}
+            Copyright © 2026 <a href="#">IGI Strategy</a> Developed by{" "}
             <a href="http://techaiindia.com">TechAiIndia</a>
           </p>
         </div>
