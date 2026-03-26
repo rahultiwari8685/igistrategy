@@ -66,7 +66,7 @@ export default function Home() {
 
       <div className="container">
         <div className="braking_news row">
-          <h4 className="braking_heding col-1">News</h4>
+          <h4 className="braking_heding col-1">IGI</h4>
           <div
             id="newsIndicators"
             className="carousel slide col-11"
@@ -74,21 +74,13 @@ export default function Home() {
           >
             <div className="carousel-inner">
               <div className="carousel-item">
-                <a href="#">
-                  There are many variations of passages of Lorem Ipsum available
-                </a>
+                <a href="#">Public Opinion</a>
               </div>
               <div className="carousel-item active carousel-item-left">
-                <a href="#">
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry
-                </a>
+                <a href="#">Ground Reporting</a>
               </div>
               <div className="carousel-item carousel-item-next carousel-item-left">
-                <a href="#">
-                  Contrary to popular belief, Lorem Ipsum is not simply random
-                  text
-                </a>
+                <a href="#">Constituency Analysis</a>
               </div>
             </div>
             <ol className="carousel-indicators">
@@ -123,7 +115,7 @@ export default function Home() {
               <div className="carousel-inner">
                 <div className="carousel-item">
                   <img
-                    src="images/slider_1.png"
+                    src="images/Exit_Poll.png"
                     alt="First slide"
                     style={{ opacity: 1 }}
                   />

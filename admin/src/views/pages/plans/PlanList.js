@@ -18,7 +18,7 @@ const PlanList = ({ onEdit }) => {
   const [plans, setPlans] = useState([])
 
   const loadPlans = async () => {
-    const res = await axios.get(`${setting.api}/api/plans/getAllPlan`)
+    const res = await axios.get(`${setting.api}/api/plans/getAllPlans`)
     setPlans(res.data.data || [])
     console.log(res.data.data)
   }

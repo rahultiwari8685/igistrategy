@@ -61,7 +61,7 @@ const CustomerForm = ({ editCustomer, onSuccess }) => {
         </CCol>
         <CCol md={6} className="mt-2">
           <CFormInput
-            label=""
+            label="Password"
             type="password"
             placeholder="Enter Password"
             {...register('password')}
