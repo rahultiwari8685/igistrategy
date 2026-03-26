@@ -73,11 +73,11 @@ export default function Header() {
                   </Link>
                 </li>
 
-                <li>
+                {/* <li>
                   <Link className="nav-link" href="/blog">
                     Blog
                   </Link>
-                </li>
+                </li> */}
 
                 <li>
                   <Link className="nav-link" href="/login">
