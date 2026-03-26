@@ -451,12 +451,12 @@ export default function Home() {
                         className={`widget ${index === 2 ? "border-0" : ""}`}
                         key={item._id}
                       >
-                        <a href={`/news-details/${item.slug}`}>
+                        <a href={`/blog-details/${item.slug}`}>
                           <img src={imgSrc} alt={item.title} />
                         </a>
 
                         <a
-                          href={`/news-details/${item.slug}`}
+                          href={`/blog-details/${item.slug}`}
                           className="w_heding"
                         >
                           {item.title}
