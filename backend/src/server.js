@@ -1,3 +1,4 @@
+import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config(); // Must come before using process.env
 
@@ -16,7 +17,6 @@ import webhookRoutes from "./routes/webhookRoutes.js";
 import customerAuthRoutes from "./routes/customerAuth.js";
 import pollRoutes from "./routes/pollRoutes.js";
 import liveRoutes from "./routes/liveRoutes.js";
-import cors from "cors";
 
 const app = express();
 
