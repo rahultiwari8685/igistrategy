@@ -113,7 +113,7 @@ export default function Home() {
     const pdfUrl = getPdfUrl(report.preview_pdf);
 
     return (
-      <div className="col-md-4 col-sm-6 mb-4">
+      <div className="col-md-12 col-sm-12 mb-4">
         <div className="shop_items">
           {/* PDF Preview */}
           <div className="shop_img">
