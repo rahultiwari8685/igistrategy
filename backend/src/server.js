@@ -55,7 +55,7 @@ app.use("/api/polls", pollRoutes);
 
 app.use("/api/live", liveRoutes);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 const MONGO_URI = process.env.MONGO_URI;
 
 console.log("MONGO_URI from env:", MONGO_URI);
