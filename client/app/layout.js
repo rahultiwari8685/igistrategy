@@ -2,16 +2,14 @@
 import "./globals.css";
 import Script from "next/script";
 export const metadata = {
-  title: "Know Your Reality",
-  description: "Know Your Reality Platform is show the Mirror of the Politicians.",
+  title: "IGI Strategy",
+  description: "IGI Strategy Platform is show the Mirror of the Politicians.",
 };
 
 export default function RootLayout({ children }) {
   return (
-
     <html lang="en">
       <head>
-
         <link rel="stylesheet" href="/css/bootstrap.min.css" />
         <link rel="stylesheet" href="/css/style.css" />
         <link
@@ -32,19 +30,22 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-
         {children}
 
-
-
         {/* jQuery */}
-        <Script src="/assets/js/jquery-3.3.1.min.js" strategy="beforeInteractive" />
+        <Script
+          src="/assets/js/jquery-3.3.1.min.js"
+          strategy="beforeInteractive"
+        />
 
         {/* Popper */}
         <Script src="/assets/js/popper.min.js" strategy="beforeInteractive" />
 
         {/* Bootstrap JS */}
-        <Script src="/assets/js/bootstrap.min.js" strategy="beforeInteractive" />
+        <Script
+          src="/assets/js/bootstrap.min.js"
+          strategy="beforeInteractive"
+        />
 
         {/* WOW animation */}
         <Script src="/assets/js/wow.min.js" />
@@ -53,9 +54,5 @@ export default function RootLayout({ children }) {
         <Script src="/assets/js/theme.js" />
       </body>
     </html>
-
-
-
-
   );
 }
