@@ -264,55 +264,19 @@ export default function Home() {
                   </a>
                 </div>
 
-                {textBlogs.slice(0, 4).map((item) => (
-                  <div className="col-md-6" key={item._id}>
-                    <div className="tranding_post">
-                      {/* <Link
-                        href={`/blog-details/${item.slug}`}
-                        className="post_img"
-                      >
-                        <img
-                          src={
-                            item.thumbnail
-                              ? `${setting.api}/uploads/images/${item.thumbnail}`
-                              : "https://via.placeholder.com/400x300?text=No+Image"
-                          }
-                          alt={item.title}
-                        />
-
-                        <span className="tag_btn">
-                          {item.categories?.[0]?.name}
-                        </span>
-                      </Link>
-
-                      <div className="post_content">
-                        <a
-                          href={`/blog-details/${item.slug}`}
-                          className="t_heding"
-                        >
-                          {item.title}
-                        </a>
-
-                        <h6>
-                          {new Date(item.createdAt).toDateString()}{" "}
-                          <span>|</span> Admin
-                        </h6>
-                      </div> */}
-
-                      {loading ? (
-                        <p className="text-center w-100">Loading reports...</p>
-                      ) : filteredReports.length > 0 ? (
-                        filteredReports.map((report) => (
-                          <ReportCard key={report._id} report={report} />
-                        ))
-                      ) : (
-                        <p className="text-center w-100">
-                          No reports found in this category.
-                        </p>
-                      )}
+                {loading ? (
+                  <p className="text-center w-100">Loading reports...</p>
+                ) : filteredReports.length > 0 ? (
+                  filteredReports.slice(0, 4).map((report) => (
+                    <div className="col-md-6" key={report._id}>
+                      <ReportCard report={report} />
                     </div>
-                  </div>
-                ))}
+                  ))
+                ) : (
+                  <p className="text-center w-100">
+                    No reports found in this category.
+                  </p>
+                )}
               </div>
 
               {/* <div className="row feature_post_area">
@@ -645,7 +609,7 @@ export default function Home() {
               style={{ width: "100%", borderRadius: "10px" }}
             />
 
-            <a href="/reports" className="btn btn-primary mt-3">
+            <a href="/report" className="btn btn-primary mt-3">
               View Details
             </a>
           </div>
