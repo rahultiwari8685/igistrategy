@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import PollContainer from "./components/poll/PollContainer";
 import YouTubeLive from "./components/YouTubeLive";
 import setting from "../setting.json";
+import Footer from "./components/Footer";
 
 export default function Home() {
   useEffect(() => {
@@ -26,6 +27,16 @@ export default function Home() {
   const featureBlogs = blogs.slice(0, 3);
 
   const fashionBlogs = blogs.filter((b) => b.videoType !== "1").slice(0, 4);
+
+  const [showPopup, setShowPopup] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowPopup(true);
+    }, 1000); // 1 second delay (optional)
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     fetch(setting.api + "/api/blogs/getAllBlog", {
@@ -115,7 +126,7 @@ export default function Home() {
               <div className="carousel-inner">
                 <div className="carousel-item">
                   <img
-                    src="images/Exit_Poll.png"
+                    src="images/slider_1.png"
                     alt="First slide"
                     style={{ opacity: 1 }}
                   />
@@ -154,6 +165,12 @@ export default function Home() {
               <li className="col-md-4 col-sm-6">
                 <a href="/news-details">Corporate Research</a>
               </li>
+              <li className="col-md-4 col-sm-6">
+                <a href="/news-details">Market Research</a>
+              </li>
+              <li className="col-md-4 col-sm-6">
+                <a href="/news-details">Public Opinion</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -165,7 +182,7 @@ export default function Home() {
             <div className="col-lg-8 left_sidebar">
               <div className="row tranding_post_area">
                 <div className="col-12 tranding_tittle">
-                  <h2>Blog</h2>
+                  <h2>Reports</h2>
                   <a href="/blog">
                     View More <i className="fa fa-arrow-right" />
                   </a>
@@ -210,7 +227,7 @@ export default function Home() {
                 ))}
               </div>
 
-              <div className="row feature_post_area">
+              {/* <div className="row feature_post_area">
                 <div className="col-12">
                   <div className="feature_tittle">
                     <h2>Report</h2>
@@ -220,7 +237,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* FILTER: Only text blogs (videoType !== "1") */}
+              
                 {blogs
                   .filter((item) => item.videoType !== "1")
                   .slice(0, 3)
@@ -231,14 +248,7 @@ export default function Home() {
                       >
                         <div className="feture_img">
                           <a href={`/blog-details/${item.slug}`}>
-                            {/* <img
-                              src={
-                                item.thumbnail
-                                  ? `https://api.igistrategy.com/uploads/images/${item.thumbnail}`
-                                  : "https://via.placeholder.com/400x300?text=No+Image"
-                              }
-                              alt={item.title}
-                            /> */}
+                        
                             <img
                               src={
                                 item.thumbnail
@@ -287,7 +297,7 @@ export default function Home() {
                       </div>
                     </div>
                   ))}
-              </div>
+              </div> */}
 
               <div className="row watch_it_area">
                 <div className="col-12">
@@ -422,7 +432,7 @@ export default function Home() {
               {/* <YouTubeLive /> */}
 
               <div className="latest_news_widget">
-                <h2>Trending News</h2>
+                <h2>Trending Reports</h2>
 
                 {blogs
                   .filter((item) => item.videoType !== "1") // ONLY TEXT BLOGS
@@ -530,80 +540,30 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="footer_area">
-        <div className="container">
-          <div className="footer_inner row">
-            <div className="col-lg-5 col-md-6 footer_logo">
-              {/* <a href="/"><img src="https://themazine.com/html/mora-blog/images/logo.png" alt="" /></a> */}
-              <h6 className="kyr-ground" style={{ color: "white" }}>
-                IGI Strategy
-              </h6>
-              <p>
-                Established in 2013 as the first cloud mining provider, Blog has
-                become a multi-functional Blog Categories, trusted by over a
-                million users.
-              </p>
-              <address>
-                <span>LOCATION</span>
-                <p>
-                  19 B, Vidhansabha Marg (Near Akashwani) Hazratganj Lucnkow,
-                  226001
-                </p>
-              </address>
-            </div>
+      {showPopup && (
+        <div className="popup-overlay">
+          <div className="popup-box">
+            <button className="close-btn" onClick={() => setShowPopup(false)}>
+              ×
+            </button>
 
-            <div className="col-lg-5 col-md-6">
-              <div className="subscribe">
-                <h4>Subscribe</h4>
-                <p>
-                  Sign up for our mailing list to get latest updates and offers
-                </p>
-                <div className="input-group">
-                  <input type="text" className="form-control" placeholder="" />
-                  <div className="input-group-append">
-                    <span className="input-group-text">
-                      <i className="fa fa-paper-plane" />
-                    </span>
-                  </div>
-                </div>
-                <h6>
-                  Working Hours : Monday-Saturday <span>Close : Sunday</span>
-                </h6>
-              </div>
-            </div>
+            <h2>IGI Exit Poll 2026</h2>
+            <p>Welcome! Check latest Bengal Election Insights.</p>
 
-            <div className="col-lg-2 col-md-3 resources">
-              <h4>Short Link</h4>
-              <ul className="resources_list">
-                <li>
-                  <a href="/about">About</a>
-                </li>
-                <li>
-                  <a href="/contact">Contact</a>
-                </li>
-                <li>
-                  <a href="#">Bug Bounty Program</a>
-                </li>
-                <li>
-                  <a href="#">Policy</a>
-                </li>
-                <li>
-                  <a href="/faq">FAQ</a>
-                </li>
-                <li>
-                  <a href="/shop">Shop</a>
-                </li>
-              </ul>
-            </div>
+            <img
+              src="/images/exitpoll.png" // your generated image
+              alt="Exit Poll"
+              style={{ width: "100%", borderRadius: "10px" }}
+            />
+
+            <a href="/exit-poll" className="btn btn-primary mt-3">
+              View Details
+            </a>
           </div>
         </div>
-        <div className="copy_right">
-          <p>
-            Copyright © 2026 <a href="#">IGI Strategy</a> Developed by{" "}
-            <a href="http://techaiindia.com">TechAiIndia</a>
-          </p>
-        </div>
-      </footer>
+      )}
+
+      <Footer />
 
       {/* Scroll Top Button */}
       <button className="scroll-top">
