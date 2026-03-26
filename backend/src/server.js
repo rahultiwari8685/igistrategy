@@ -20,18 +20,20 @@ import cors from "cors";
 
 const app = express();
 
-// app.use(cors({
-//     origin: "http://localhost:3000",
-//     methods: "GET,POST,PUT,DELETE,PATCH",
-//     credentials: true
-// }));
-
 app.use(
   cors({
-    origin: ["https://igistrategy.com", "https://admin.igistrategy.com"],
+    origin: "http://localhost:3000",
+    methods: "GET,POST,PUT,DELETE,PATCH",
     credentials: true,
   }),
 );
+
+// app.use(
+//   cors({
+//     origin: ["https://igistrategy.com", "https://admin.igistrategy.com"],
+//     credentials: true,
+//   }),
+// );
 
 app.use(express.json());
 

@@ -5,176 +5,182 @@ import Footer from "../components/Footer";
 import { useRouter } from "next/navigation";
 
 export default function Register() {
-    const router = useRouter();
+  const router = useRouter();
 
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
     });
+  };
 
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
+  // Submit form
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
 
-    // Handle input change
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-    };
+    if (formData.password !== formData.confirmPassword) {
+      setError("Password and Confirm Password do not match");
+      return;
+    }
 
-    // Submit form
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError("");
+    setLoading(true);
 
-        if (formData.password !== formData.confirmPassword) {
-            setError("Password and Confirm Password do not match");
-            return;
-        }
+    try {
+      const res = await fetch(
+        "http://127.0.0.1:5000/api/customers/saveCustomer",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+          }),
+        },
+      );
 
-        setLoading(true);
+      const data = await res.json();
 
-        try {
-            const res = await fetch("http://127.0.0.1:5000/api/customers/saveCustomer", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    name: formData.name,
-                    email: formData.email,
-                    password: formData.password,
-                }),
-            });
+      if (!res.ok) {
+        setError(data.message || "Registration failed");
+      } else {
+        alert("Registration successful");
+        router.push("/login");
+      }
+    } catch (err) {
+      setError("Server error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-            const data = await res.json();
+  return (
+    <>
+      <Header />
 
-            if (!res.ok) {
-                setError(data.message || "Registration failed");
-            } else {
-                alert("Registration successful");
-                router.push("/login");
-            }
-        } catch (err) {
-            setError("Server error. Please try again.");
-        } finally {
-            setLoading(false);
-        }
-    };
+      {/* Page Header */}
+      <div className="container">
+        <div className="pages_heder">
+          <h2>Register Page</h2>
+          <ol className="breadcrumb">
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <li>
+              <a href="#">Pages</a>
+            </li>
+            <li>
+              <a className="active">Register</a>
+            </li>
+          </ol>
+        </div>
+      </div>
 
-    return (
-        <>
-            <Header />
+      {/* Register Form */}
+      <section className="login_area">
+        <div className="container">
+          <div className="login_inner">
+            <form className="row login_from" onSubmit={handleSubmit}>
+              {error && <div className="col-12 text-danger mb-3">{error}</div>}
 
-            {/* Page Header */}
-            <div className="container">
-                <div className="pages_heder">
-                    <h2>Register Page</h2>
-                    <ol className="breadcrumb">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="#">Pages</a></li>
-                        <li><a className="active">Register</a></li>
-                    </ol>
-                </div>
-            </div>
+              <div className="form-group col-12">
+                <input
+                  type="text"
+                  className="form-control"
+                  name="name"
+                  placeholder="Your Name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-            {/* Register Form */}
-            <section className="login_area">
-                <div className="container">
-                    <div className="login_inner">
-                        <form className="row login_from" onSubmit={handleSubmit}>
+              <div className="form-group col-12">
+                <input
+                  type="email"
+                  className="form-control"
+                  name="email"
+                  placeholder="Email Address"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-                            {error && (
-                                <div className="col-12 text-danger mb-3">
-                                    {error}
-                                </div>
-                            )}
+              <div className="form-group col-12">
+                <input
+                  type="password"
+                  className="form-control"
+                  name="password"
+                  placeholder="Password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-                            <div className="form-group col-12">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    name="name"
-                                    placeholder="Your Name"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
+              <div className="form-group col-12">
+                <input
+                  type="password"
+                  className="form-control"
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-                            <div className="form-group col-12">
-                                <input
-                                    type="email"
-                                    className="form-control"
-                                    name="email"
-                                    placeholder="Email Address"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
+              <div className="form-group larg_btn col-12">
+                <button className="defult_btn" type="submit" disabled={loading}>
+                  {loading ? "Registering..." : "Register"}
+                </button>
+              </div>
 
-                            <div className="form-group col-12">
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    name="password"
-                                    placeholder="Password"
-                                    value={formData.password}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
+              <div className="form-group col-sm-6">
+                <a href="#" className="reset_btn">
+                  Reset Password
+                </a>
+              </div>
 
-                            <div className="form-group col-12">
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    name="confirmPassword"
-                                    placeholder="Confirm Password"
-                                    value={formData.confirmPassword}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
+              <div className="form-group col-sm-6 text-right">
+                <a href="/login" className="reset_btn">
+                  Login
+                </a>
+              </div>
 
-                            <div className="form-group larg_btn col-12">
-                                <button className="defult_btn" type="submit" disabled={loading}>
-                                    {loading ? "Registering..." : "Register"}
-                                </button>
-                            </div>
+              <h4 className="col-12">or sign up with</h4>
 
-                            <div className="form-group col-sm-6">
-                                <a href="#" className="reset_btn">Reset Password</a>
-                            </div>
+              <div className="form-group col-sm-6">
+                <a href="#" className="google_btn">
+                  <img src="/images/google.png" alt="" /> GOOGLE
+                </a>
+              </div>
 
-                            <div className="form-group col-sm-6 text-right">
-                                <a href="/login" className="reset_btn">Login</a>
-                            </div>
+              <div className="form-group col-sm-6">
+                <a href="#" className="google_btn">
+                  <i className="fa fa-facebook"></i> Facebook
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
 
-                            <h4 className="col-12">or sign up with</h4>
-
-                            <div className="form-group col-sm-6">
-                                <a href="#" className="google_btn">
-                                    <img src="/images/google.png" alt="" /> GOOGLE
-                                </a>
-                            </div>
-
-                            <div className="form-group col-sm-6">
-                                <a href="#" className="google_btn">
-                                    <i className="fa fa-facebook"></i> Facebook
-                                </a>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-            </section>
-
-            <Footer />
-        </>
-    );
+      <Footer />
+    </>
+  );
 }

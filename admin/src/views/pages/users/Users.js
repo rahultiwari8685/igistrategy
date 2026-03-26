@@ -1,395 +1,359 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react'
 import {
-    CCard,
-    CCardBody,
-    CCardHeader,
-    CForm,
-    CFormInput,
-    CFormSelect,
-    CButton,
-    CRow,
-    CCol,
-    CTable,
-    CTableBody,
-    CTableHead,
-    CTableRow,
-    CTableHeaderCell,
-    CTableDataCell,
-    COffcanvas,
-    COffcanvasHeader,
-    COffcanvasBody,
-    CPagination,
-    CPaginationItem,
-} from "@coreui/react";
-import { useForm } from "react-hook-form";
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CForm,
+  CFormInput,
+  CFormSelect,
+  CButton,
+  CRow,
+  CCol,
+  CTable,
+  CTableBody,
+  CTableHead,
+  CTableRow,
+  CTableHeaderCell,
+  CTableDataCell,
+  COffcanvas,
+  COffcanvasHeader,
+  COffcanvasBody,
+  CPagination,
+  CPaginationItem,
+} from '@coreui/react'
+import { useForm } from 'react-hook-form'
 import setting from '../../../setting.json'
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import secureLocalStorage from "react-secure-storage";
-import { cilPencil, cilTrash } from "@coreui/icons";
-import CIcon from "@coreui/icons-react";
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+import secureLocalStorage from 'react-secure-storage'
+import { cilPencil, cilTrash } from '@coreui/icons'
+import CIcon from '@coreui/icons-react'
 
 const schema = yup.object().shape({
-    name: yup.string().required("Name is required"),
-    email: yup.string().required("Phone is required"),
-    password: yup.string().required("Enter HSN Code"),
-    // role: yup.string().required("Status is required"),
-    // status: yup.string().required("Status is required"),
-    phone: yup.string().required("Status is required"),
-    // post_permission: yup.string().required("Status is required"),
-    profileImage: yup.file,
-
-
-});
+  name: yup.string().required('Name is required'),
+  email: yup.string().required('Phone is required'),
+  password: yup.string().required('Enter HSN Code'),
+  // role: yup.string().required("Status is required"),
+  // status: yup.string().required("Status is required"),
+  phone: yup.string().required('Status is required'),
+  // post_permission: yup.string().required("Status is required"),
+  profileImage: yup.file,
+})
 
 const Users = () => {
-    const [userList, setUserList] = useState([]);
+  const [userList, setUserList] = useState([])
 
-    const [editingUser, setEditingUser] = useState(null);
-    const [visible, setVisible] = useState(false);
+  const [editingUser, setEditingUser] = useState(null)
+  const [visible, setVisible] = useState(false)
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 10
 
-    const {
-        register,
-        handleSubmit,
-        reset,
-        setValue,
-        watch,
-        formState: { errors },
-    } = useForm({ resolver: yupResolver(schema) });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) })
 
+  useEffect(() => {
+    if (editingUser) {
+      reset({
+        name: editingUser.name || '',
+        email: editingUser.email || '',
+        phone: editingUser.phone || '',
+        password: '', // usually blank, don’t show old password
+        // role: editingUser.role || "",
+        // post_permission: editingUser.post_permission || "",
+        // status: editingUser.status || "",
+      })
+    }
+  }, [editingUser, reset])
 
-    useEffect(() => {
-        if (editingUser) {
-            reset({
-                name: editingUser.name || "",
-                email: editingUser.email || "",
-                phone: editingUser.phone || "",
-                password: "", // usually blank, don’t show old password
-                // role: editingUser.role || "",
-                // post_permission: editingUser.post_permission || "",
-                // status: editingUser.status || "",
-            });
+  const getAllUser = async () => {
+    await fetch(setting.api + '/api/users/getAllUser', {
+      method: 'GET',
+      // mode: "cors",
+      headers: {
+        // "Content-Type": "application/json",
+        // "Authorization": 'Bearer ' + JSON.parse(secureLocalStorage.getItem("logininfo")).token,
+      },
+    })
+      .then((response) => response.json())
+      .then((u) => {
+        if (u.status == false) {
+          // secureLocalStorage.clear();
+          navigate('/login')
+        } else {
+          setUserList(u.data)
         }
-    }, [editingUser, reset]);
+      })
+  }
 
+  useEffect(() => {
+    getAllUser()
+  }, [])
 
+  const saveUser = async (data) => {
+    const formData = new FormData()
+    formData.append('name', data.name)
+    formData.append('email', data.email)
+    formData.append('phone', data.phone)
+    formData.append('password', data.password)
+    // formData.append("role", data.role);
+    // formData.append("post_permission", data.post_permission);
+    // formData.append("status", data.status);
 
-    const getAllUser = async () => {
-        await fetch(setting.api + "/api/users/getAllUser", {
-            method: "GET",
-            // mode: "cors",
-            headers: {
-                // "Content-Type": "application/json",
-                // "Authorization": 'Bearer ' + JSON.parse(secureLocalStorage.getItem("logininfo")).token,
-            },
-
-        })
-            .then(response => response.json())
-            .then(u => {
-
-                if (u.status == false) {
-                    // secureLocalStorage.clear();
-                    navigate('/login');
-                } else {
-                    setUserList(u.data);
-
-
-                }
-
-
-            }
-            );
-
+    if (data.profileImage?.[0]) {
+      formData.append('profileImage', data.profileImage[0])
     }
 
-    useEffect(() => {
-        getAllUser();
-    }, [])
+    // ✅ Decide endpoint and headers
+    let endpoint = '/api/users/saveUser'
+    let headers = {} // default no headers
 
-    const saveUser = async (data) => {
+    if (editingUser) {
+      endpoint = '/api/users/updateUser'
+      formData.append('_id', editingUser._id)
 
-
-        const formData = new FormData();
-        formData.append("name", data.name);
-        formData.append("email", data.email);
-        formData.append("phone", data.phone);
-        formData.append("password", data.password);
-        // formData.append("role", data.role);
-        // formData.append("post_permission", data.post_permission);
-        // formData.append("status", data.status);
-
-        if (data.profileImage?.[0]) {
-            formData.append("profileImage", data.profileImage[0]);
-        }
-
-        // ✅ Decide endpoint and headers
-        let endpoint = "/api/users/saveUser";
-        let headers = {}; // default no headers
-
-        if (editingUser) {
-            endpoint = "/api/users/updateUser";
-            formData.append("_id", editingUser._id);
-
-            // ✅ only set token when updating
-            headers = {
-                // "Authorization": "Bearer " + JSON.parse(secureLocalStorage.getItem("logininfo")).token,
-            };
-        }
-
-        try {
-            const res = await fetch(setting.api + endpoint, {
-                method: "POST",
-                body: formData,
-                mode: "cors",
-                headers, // ✅ use headers conditionally
-            });
-
-            const result = await res.json();
-            console.log("User API response:", result);
-
-            if (result.status === true) {
-                getAllUser();
-                reset();
-                setEditingUser(null);
-                setVisible(false);
-            } else {
-                alert(result.message || "Failed to save user");
-            }
-        } catch (error) {
-            console.error("Error saving user:", error);
-        }
-    };
-
-
-
-    const handleEdit = (user) => {
-        setEditingUser(user);
-        setVisible(true);
-
-    };
-
-    function handleDelete(id) {
-        var ans = confirm("Are you sure For Delete?");
-        console.log(ans);
-
-        if (ans == true) {
-            deleteUser(id);
-        }
-
+      // ✅ only set token when updating
+      headers = {
+        // "Authorization": "Bearer " + JSON.parse(secureLocalStorage.getItem("logininfo")).token,
+      }
     }
 
-    const deleteUser = async (id) => {
-        try {
-            const token = JSON.parse(secureLocalStorage.getItem("logininfo"))?.token;
+    try {
+      const res = await fetch(setting.api + endpoint, {
+        method: 'POST',
+        body: formData,
+        mode: 'cors',
+        headers, // ✅ use headers conditionally
+      })
 
-            const response = await fetch(`${setting.api}/api/users/deleteUser/${id}`, {
-                method: "POST",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`, // ✅ send token
-                },
-            });
+      const result = await res.json()
+      console.log('User API response:', result)
 
-            if (!response.ok) {
-                console.error("Delete failed:", response.status);
-            } else {
-                console.log("User deleted:", await response.json());
-                getAllUser(); // ✅ refresh after delete
-            }
-        } catch (err) {
-            console.error("Error deleting user:", err);
-        }
-    };
+      if (result.status === true) {
+        getAllUser()
+        reset()
+        setEditingUser(null)
+        setVisible(false)
+      } else {
+        alert(result.message || 'Failed to save user')
+      }
+    } catch (error) {
+      console.error('Error saving user:', error)
+    }
+  }
 
-    const totalPages = Math.ceil(userList.length / itemsPerPage);
-    const paginatedItems = userList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const handleEdit = (user) => {
+    setEditingUser(user)
+    setVisible(true)
+  }
 
+  function handleDelete(id) {
+    var ans = confirm('Are you sure For Delete?')
+    console.log(ans)
 
-    return (
-        <div>
+    if (ans == true) {
+      deleteUser(id)
+    }
+  }
 
-            <CCard className="shadow border-0 rounded-4">
-                <CCardHeader className="bg-dark text-white fw-bold px-4 py-3 shadow-sm">
-                    <div className="d-flex justify-content-between align-items-center">
-                        <h5 className="mb-0">
-                            <i className="bi bi-people-fill me-2 text-warning"></i> User
-                        </h5>
-                        <CButton
-                            color="light"
-                            variant="outline"
-                            className="fw-semibold px-3 shadow-sm rounded-pill"
-                            onClick={() => {
-                                setEditingUser(null);
-                                reset();
-                                setVisible(true);
-                            }}
-                        >
-                            <i className="bi bi-plus-circle me-2"></i>{" "}
-                            {userList ? "Create User" : "Update User"}
-                        </CButton>
-                    </div>
-                </CCardHeader>
+  const deleteUser = async (id) => {
+    try {
+      const token = JSON.parse(secureLocalStorage.getItem('logininfo'))?.token
 
-                <CCardBody>
-                    <CTable striped responsive bordered hover>
-                        <CTableHead color="dark">
-                            <CTableRow>
-                                <CTableHeaderCell>#</CTableHeaderCell>
+      const response = await fetch(`${setting.api}/api/users/deleteUser/${id}`, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`, // ✅ send token
+        },
+      })
 
-                                <CTableHeaderCell>Name</CTableHeaderCell>
-                                <CTableHeaderCell>Phone</CTableHeaderCell>
-                                <CTableHeaderCell>Email</CTableHeaderCell>
-                                <CTableHeaderCell>Role</CTableHeaderCell>
-                                <CTableHeaderCell>Action</CTableHeaderCell>
-                            </CTableRow>
-                        </CTableHead>
-                        <CTableBody>
-                            {
-                                paginatedItems.map((a, index) => {
-                                    const actualIndex = (currentPage - 1) * itemsPerPage + index;
-                                    return (
+      if (!response.ok) {
+        console.error('Delete failed:', response.status)
+      } else {
+        console.log('User deleted:', await response.json())
+        getAllUser() // ✅ refresh after delete
+      }
+    } catch (err) {
+      console.error('Error deleting user:', err)
+    }
+  }
 
+  const totalPages = Math.ceil(userList.length / itemsPerPage)
+  const paginatedItems = userList.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  )
 
-                                        <CTableRow key={a.id}>
-                                            <CTableDataCell>{actualIndex + 1}</CTableDataCell>
-                                            <CTableDataCell>{a.name}</CTableDataCell>
-                                            <CTableDataCell>{a.phone}</CTableDataCell>
-                                            <CTableDataCell>{a.email}</CTableDataCell>
-                                            <CTableDataCell>
-                                                <span className="badge bg-dark">
-                                                    {a.role === '1'
-                                                        ? "Admin"
-                                                        : a.role === '2'
-                                                            ? "Editor"
-                                                            : a.role === '3'
-                                                                ? "Correspondent"
-                                                                : "Unknown"}
-                                                </span>
-                                            </CTableDataCell>
-                                            <CTableDataCell>
-                                                <CButton
-                                                    size="sm"
-                                                    color="warning"
-                                                    className="rounded-pill px-3 shadow-sm fw-semibold"
-                                                    onClick={() => handleEdit(a)}
-                                                >
-                                                    <CIcon icon={cilPencil} style={{ marginRight: '5px' }} />
-                                                    Edit
-                                                </CButton>{" "}
-                                                <CButton
-                                                    size="sm"
-                                                    color="danger"
-                                                    className="rounded-pill px-3 shadow-sm fw-semibold"
-                                                    onClick={() => handleDelete(a._id)}
-                                                >
-                                                    <CIcon icon={cilTrash} style={{ marginRight: '5px' }} />
-                                                    Delete
-                                                </CButton>
-
-                                            </CTableDataCell>
-                                        </CTableRow>
-                                    )
-                                })}
-
-                        </CTableBody>
-                    </CTable>
-
-                    <div className="d-flex justify-content-end mt-3">
-                        <CPagination align="end">
-                            {[...Array(totalPages)].map((_, idx) => (
-                                <CPaginationItem
-                                    key={idx + 1}
-                                    active={currentPage === idx + 1}
-                                    onClick={() => setCurrentPage(idx + 1)}
-                                >
-                                    {idx + 1}
-                                </CPaginationItem>
-                            ))}
-                        </CPagination>
-                    </div>
-
-                </CCardBody>
-            </CCard>
-
-
-            <COffcanvas
-                placement="end"
-                visible={visible}
-                onHide={() => setVisible(false)}
-                backdrop={true}
+  return (
+    <div>
+      <CCard className="shadow border-0 rounded-4">
+        <CCardHeader className="bg-dark text-white fw-bold px-4 py-3 shadow-sm">
+          <div className="d-flex justify-content-between align-items-center">
+            <h5 className="mb-0">
+              <i className="bi bi-people-fill me-2 text-warning"></i> User
+            </h5>
+            <CButton
+              color="light"
+              variant="outline"
+              className="fw-semibold px-3 shadow-sm rounded-pill"
+              onClick={() => {
+                setEditingUser(null)
+                reset()
+                setVisible(true)
+              }}
             >
-                <COffcanvasHeader className="bg-dark text-white fw-bold" closeButton>
-                    {editingUser ? "Update User" : "Create User"}
-                </COffcanvasHeader>
-                <COffcanvasBody>
-                    <CForm onSubmit={handleSubmit(saveUser)}>
-                        <CRow className="mb-3">
-                            <CCol md={12}>
-                                <CFormInput
-                                    type="text"
-                                    placeholder="Enter Name"
-                                    label="Full Name"
-                                    {...register("name", { required: "Name is required" })}
-                                />
-                                {errors.name && (
-                                    <small className="text-danger">{errors.name.message}</small>
-                                )}
-                            </CCol>
-                        </CRow>
+              <i className="bi bi-plus-circle me-2"></i> {userList ? 'Create User' : 'Update User'}
+            </CButton>
+          </div>
+        </CCardHeader>
 
-                        <CRow className="mb-3">
-                            <CCol md={12}>
-                                <CFormInput
-                                    type="email"
-                                    label="Email"
-                                    placeholder="Enter Email"
-                                    {...register("email", { required: "Email is required" })}
-                                />
-                                {errors.email && (
-                                    <small className="text-danger">{errors.email.message}</small>
-                                )}
-                            </CCol>
-                        </CRow>
+        <CCardBody>
+          <CTable striped responsive bordered hover>
+            <CTableHead color="dark">
+              <CTableRow>
+                <CTableHeaderCell>#</CTableHeaderCell>
 
-                        <CRow className="mb-3">
-                            <CCol md={12}>
-                                <CFormInput
-                                    type="text"
-                                    label="Phone"
-                                    placeholder="Enter Phone Number"
-                                    {...register("phone", { required: "Phone is required" })}
-                                />
-                                {errors.phone && (
-                                    <small className="text-danger">
-                                        {errors.phone.message}
-                                    </small>
-                                )}
-                            </CCol>
-                        </CRow>
+                <CTableHeaderCell>Name</CTableHeaderCell>
+                <CTableHeaderCell>Phone</CTableHeaderCell>
+                <CTableHeaderCell>Email</CTableHeaderCell>
+                <CTableHeaderCell>Role</CTableHeaderCell>
+                <CTableHeaderCell>Action</CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableBody>
+              {paginatedItems.map((a, index) => {
+                const actualIndex = (currentPage - 1) * itemsPerPage + index
+                return (
+                  <CTableRow key={a.id}>
+                    <CTableDataCell>{actualIndex + 1}</CTableDataCell>
+                    <CTableDataCell>{a.name}</CTableDataCell>
+                    <CTableDataCell>{a.phone}</CTableDataCell>
+                    <CTableDataCell>{a.email}</CTableDataCell>
+                    <CTableDataCell>
+                      <span className="badge bg-dark">
+                        {a.role === '1'
+                          ? 'Admin'
+                          : a.role === '2'
+                            ? 'Editor'
+                            : a.role === '3'
+                              ? 'Correspondent'
+                              : 'Unknown'}
+                      </span>
+                    </CTableDataCell>
+                    <CTableDataCell>
+                      <CButton
+                        size="sm"
+                        color="warning"
+                        className="rounded-pill px-3 shadow-sm fw-semibold"
+                        onClick={() => handleEdit(a)}
+                      >
+                        <CIcon icon={cilPencil} style={{ marginRight: '5px' }} />
+                        Edit
+                      </CButton>{' '}
+                      <CButton
+                        size="sm"
+                        color="danger"
+                        className="rounded-pill px-3 shadow-sm fw-semibold"
+                        onClick={() => handleDelete(a._id)}
+                      >
+                        <CIcon icon={cilTrash} style={{ marginRight: '5px' }} />
+                        Delete
+                      </CButton>
+                    </CTableDataCell>
+                  </CTableRow>
+                )
+              })}
+            </CTableBody>
+          </CTable>
 
-                        <CRow className="mb-3">
-                            <CCol md={12}>
-                                <CFormInput
-                                    type="password"
-                                    label="Password"
-                                    placeholder="Enter Password"
-                                    {...register("password", {
-                                        required: "Password is required",
-                                    })}
-                                />
-                                {errors.password && (
-                                    <small className="text-danger">
-                                        {errors.password.message}
-                                    </small>
-                                )}
-                            </CCol>
-                        </CRow>
+          <div className="d-flex justify-content-end mt-3">
+            <CPagination align="end">
+              {[...Array(totalPages)].map((_, idx) => (
+                <CPaginationItem
+                  key={idx + 1}
+                  active={currentPage === idx + 1}
+                  onClick={() => setCurrentPage(idx + 1)}
+                >
+                  {idx + 1}
+                </CPaginationItem>
+              ))}
+            </CPagination>
+          </div>
+        </CCardBody>
+      </CCard>
 
-                        {/* <CRow className="mb-3">
+      <COffcanvas
+        placement="end"
+        visible={visible}
+        onHide={() => setVisible(false)}
+        backdrop={true}
+      >
+        <COffcanvasHeader className="bg-dark text-white fw-bold" closeButton>
+          {editingUser ? 'Update User' : 'Create User'}
+        </COffcanvasHeader>
+        <COffcanvasBody>
+          <CForm onSubmit={handleSubmit(saveUser)}>
+            <CRow className="mb-3">
+              <CCol md={12}>
+                <CFormInput
+                  type="text"
+                  placeholder="Enter Name"
+                  label="Full Name"
+                  {...register('name', { required: 'Name is required' })}
+                />
+                {errors.name && <small className="text-danger">{errors.name.message}</small>}
+              </CCol>
+            </CRow>
+
+            <CRow className="mb-3">
+              <CCol md={12}>
+                <CFormInput
+                  type="email"
+                  label="Email"
+                  placeholder="Enter Email"
+                  {...register('email', { required: 'Email is required' })}
+                />
+                {errors.email && <small className="text-danger">{errors.email.message}</small>}
+              </CCol>
+            </CRow>
+
+            <CRow className="mb-3">
+              <CCol md={12}>
+                <CFormInput
+                  type="text"
+                  label="Phone"
+                  placeholder="Enter Phone Number"
+                  {...register('phone', { required: 'Phone is required' })}
+                />
+                {errors.phone && <small className="text-danger">{errors.phone.message}</small>}
+              </CCol>
+            </CRow>
+
+            <CRow className="mb-3">
+              <CCol md={12}>
+                <CFormInput
+                  type="password"
+                  label="Password"
+                  placeholder="Enter Password"
+                  {...register('password', {
+                    required: 'Password is required',
+                  })}
+                />
+                {errors.password && (
+                  <small className="text-danger">{errors.password.message}</small>
+                )}
+              </CCol>
+            </CRow>
+
+            {/* <CRow className="mb-3">
                             <CCol md={6}>
                                 <CFormSelect
                                     label="Role"
@@ -419,8 +383,8 @@ const Users = () => {
                             </CCol>
                         </CRow> */}
 
-                        <CRow className="mb-3">
-                            {/* <CCol md={6}>
+            <CRow className="mb-3">
+              {/* <CCol md={6}>
                                 <CFormSelect
                                     label="Status"
                                     {...register("status", { required: "Status is required" })}
@@ -434,34 +398,31 @@ const Users = () => {
                                     <small className="text-danger">{errors.status.message}</small>
                                 )}
                             </CCol> */}
-                            <CCol md={6}>
-                                <CFormInput
-                                    type="file"
-                                    label="Profile Image"
-                                    accept="image/*"
-                                    {...register("profileImage")}
-                                />
-                            </CCol>
-                        </CRow>
+              <CCol md={6}>
+                <CFormInput
+                  type="file"
+                  label="Profile Image"
+                  accept="image/*"
+                  {...register('profileImage')}
+                />
+              </CCol>
+            </CRow>
 
-                        <div className="d-flex justify-content-end">
-                            <CButton
-                                type="submit"
-                                color={editingUser ? "warning" : "success"}
-                                className="rounded-pill px-4 shadow-sm fw-semibold"
-                            >
-                                <i
-                                    className={`bi ${editingUser ? "bi-arrow-repeat" : "bi-check-circle"
-                                        } me-2`}
-                                ></i>
-                                {editingUser ? "Update User" : "Save User"}
-                            </CButton>
-                        </div>
-                    </CForm>
-                </COffcanvasBody>
-            </COffcanvas>
-        </div>
-    );
-};
+            <div className="d-flex justify-content-end">
+              <CButton
+                type="submit"
+                color={editingUser ? 'warning' : 'success'}
+                className="rounded-pill px-4 shadow-sm fw-semibold"
+              >
+                <i className={`bi ${editingUser ? 'bi-arrow-repeat' : 'bi-check-circle'} me-2`}></i>
+                {editingUser ? 'Update User' : 'Save User'}
+              </CButton>
+            </div>
+          </CForm>
+        </COffcanvasBody>
+      </COffcanvas>
+    </div>
+  )
+}
 
-export default Users;
+export default Users
