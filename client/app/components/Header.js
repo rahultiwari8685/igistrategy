@@ -80,7 +80,7 @@ export default function Header() {
                 </li> */}
 
                 <li>
-                  <Link className="nav-link" href="/login">
+                  <Link className="nav-link" href="/report">
                     Reports
                   </Link>
                 </li>

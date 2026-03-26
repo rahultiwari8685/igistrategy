@@ -71,6 +71,85 @@ export default function Home() {
     return !item.youtubeUrl && item.videoType !== "1" && item.videoType !== 1;
   });
 
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [reports, setReports] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const categories = ["All", "political", "corporate"];
+
+  const loadReports = async () => {
+    try {
+      const res = await fetch(setting.api + "/api/reports/getAllReport", {
+        method: "GET",
+      });
+      const data = await res.json();
+      if (data.status) {
+        setReports(data.data);
+      }
+    } catch (err) {
+      console.error("Failed to load reports", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadReports();
+  }, []);
+
+  const getPdfUrl = (path) => {
+    if (!path) return null;
+    return setting.api + "/" + path.replace(/\\/g, "/");
+  };
+
+  const filteredReports =
+    activeCategory === "All"
+      ? reports
+      : reports.filter(
+          (r) => r.report_type?.toLowerCase() === activeCategory.toLowerCase(),
+        );
+
+  const ReportCard = ({ report }) => {
+    const pdfUrl = getPdfUrl(report.preview_pdf);
+
+    return (
+      <div className="col-md-4 col-sm-6 mb-4">
+        <div className="shop_items">
+          {/* PDF Preview */}
+          <div className="shop_img">
+            {pdfUrl ? (
+              <iframe
+                src={pdfUrl}
+                title={report.title}
+                width="100%"
+                height="220"
+                style={{
+                  border: "1px solid #ddd",
+                  borderRadius: "6px",
+                }}
+              />
+            ) : (
+              <img
+                src="https://via.placeholder.com/400x220?text=No+Preview"
+                alt={report.title}
+              />
+            )}
+          </div>
+
+          <div className="shop_text">
+            <span className="badge badge-dark mb-2">{report.report_type}</span>
+
+            <h5 className="s_heding">{report.title}</h5>
+
+            <Link href={`/report-details/${report._id}`} className="theme_btn">
+              View Report
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
       <Header />
@@ -188,7 +267,7 @@ export default function Home() {
                 {textBlogs.slice(0, 4).map((item) => (
                   <div className="col-md-6" key={item._id}>
                     <div className="tranding_post">
-                      <Link
+                      {/* <Link
                         href={`/blog-details/${item.slug}`}
                         className="post_img"
                       >
@@ -218,7 +297,19 @@ export default function Home() {
                           {new Date(item.createdAt).toDateString()}{" "}
                           <span>|</span> Admin
                         </h6>
-                      </div>
+                      </div> */}
+
+                      {loading ? (
+                        <p className="text-center w-100">Loading reports...</p>
+                      ) : filteredReports.length > 0 ? (
+                        filteredReports.map((report) => (
+                          <ReportCard key={report._id} report={report} />
+                        ))
+                      ) : (
+                        <p className="text-center w-100">
+                          No reports found in this category.
+                        </p>
+                      )}
                     </div>
                   </div>
                 ))}
