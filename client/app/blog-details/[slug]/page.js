@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Header from "../../components/Header";
 import setting from "../../../setting.json";
+import Footer from "@/app/components/Footer";
 
 export default function BlogDetails() {
   const { slug } = useParams();
@@ -59,6 +60,7 @@ export default function BlogDetails() {
           </div>
         </div>
       </section>
+      <Footer />
     </>
   );
 }

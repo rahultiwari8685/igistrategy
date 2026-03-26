@@ -208,7 +208,7 @@ export default function Home() {
 
                       <div className="post_content">
                         <a
-                          href={`/news-details/${item.slug}`}
+                          href={`/blog-details/${item.slug}`}
                           className="t_heding"
                         >
                           {item.title}
@@ -284,7 +284,7 @@ export default function Home() {
 
                         <div className="media-body feture_content">
                           <a
-                            href={`/news-details/${item.slug}`}
+                            href={`/blog-details/${item.slug}`}
                             className="f_heding"
                           >
                             {item.title}
@@ -344,7 +344,7 @@ export default function Home() {
                           </a>
 
                           <a
-                            href={`/video-details/${item.slug}`}
+                            href={`/blog-details/${item.slug}`}
                             className="video_heding"
                           >
                             {item.title}
@@ -486,7 +486,7 @@ export default function Home() {
                     return (
                       <div className="watch_video" key={video._id}>
                         <a
-                          href={`/video-details/${video.slug}`}
+                          href={`/blog-details/${video.slug}`}
                           className="video_thumbnail"
                         >
                           <img src={thumbnail} alt={video.title} />
@@ -497,7 +497,7 @@ export default function Home() {
                         </a>
 
                         <a
-                          href={`/video-details/${video.slug}`}
+                          href={`/blog-details/${video.slug}`}
                           className="video_heding"
                         >
                           {video.title}
