@@ -155,20 +155,20 @@ export default function Home() {
               </a>
             </div>
 
-            <ul className="row magazine">
-              <li className="col-md-3 col-lg-3 col-sm-6">
+            {/* <ul className="row magazine">
+              <li className="col-md-3 col-lg-4 col-sm-6">
                 <a href="/news-details">Political Research</a>
               </li>
-              <li className="col-md-3  col-lg-3 col-sm-6">
+              <li className="col-md-3  col-lg-4 col-sm-6">
                 <a href="/news-details">Ground Reporting</a>
               </li>
-              <li className="col-md-3  col-lg-3 col-sm-6">
+              <li className="col-md-3  col-lg-4 col-sm-6">
                 <a href="/news-details">Corporate Research</a>
               </li>
-              <li className="col-md-3  col-lg-3 col-sm-6">
+              <li className="col-md-3  col-lg-4 col-sm-6">
                 <a href="/news-details">Market Research</a>
               </li>
-            </ul>
+            </ul> */}
           </div>
         </div>
       </section>
