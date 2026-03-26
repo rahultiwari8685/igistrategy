@@ -28,7 +28,7 @@ export default function Home() {
   const fashionBlogs = blogs.filter((b) => b.videoType !== "1").slice(0, 4);
 
   useEffect(() => {
-    fetch(setting.json + "/api/blogs/getAllBlog", {
+    fetch(setting.api + "/api/blogs/getAllBlog", {
       method: "GET",
       mode: "cors",
       headers: {
