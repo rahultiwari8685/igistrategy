@@ -11,7 +11,6 @@ import {
   CSidebarToggler,
 } from '@coreui/react'
 
-
 import { AppSidebarNav } from './AppSidebarNav'
 
 import logo from 'src/assets/brand/logo.png'
@@ -30,7 +29,6 @@ const AppSidebar = () => {
     <CSidebar
       className="border-end"
       colorScheme="dark"
-
       position="fixed"
       unfoldable={unfoldable}
       visible={sidebarShow}
@@ -51,7 +49,7 @@ const AppSidebar = () => {
               textTransform: 'uppercase',
             }}
           >
-            KYR Portal
+            IGI Portal
           </span>
         </div>
 
@@ -61,7 +59,6 @@ const AppSidebar = () => {
           onClick={() => dispatch({ type: 'set', sidebarShow: false })}
         />
       </CSidebarHeader>
-
 
       <AppSidebarNav items={navigation} />
       <CSidebarFooter className="border-top d-none d-lg-flex">

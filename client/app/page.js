@@ -154,19 +154,13 @@ export default function Home() {
 
             <ul className="row magazine">
               <li className="col-md-4 col-sm-6">
-                <a href="/news-details">
-                  Earned $9,000,000 per Year with a Magazine Wesbite
-                </a>
+                <a href="/news-details">Political Research</a>
               </li>
               <li className="col-md-4 col-sm-6">
-                <a href="/news-details">
-                  The man who builds up private libraries - book by rare book
-                </a>
+                <a href="/news-details">Ground Reporting</a>
               </li>
               <li className="col-md-4 col-sm-6">
-                <a href="/news-details">
-                  Futures Firm Cboe Filed for 6 Bitcoin ETFs This Week
-                </a>
+                <a href="/news-details">Corporate Research</a>
               </li>
             </ul>
           </div>
