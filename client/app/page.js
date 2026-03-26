@@ -156,20 +156,17 @@ export default function Home() {
             </div>
 
             <ul className="row magazine">
-              <li className="col-md-4 col-sm-6">
+              <li className="col-md-3 col-sm-6">
                 <a href="/news-details">Political Research</a>
               </li>
-              <li className="col-md-4 col-sm-6">
+              <li className="col-md-3 col-sm-6">
                 <a href="/news-details">Ground Reporting</a>
               </li>
-              <li className="col-md-4 col-sm-6">
+              <li className="col-md-3 col-sm-6">
                 <a href="/news-details">Corporate Research</a>
               </li>
-              <li className="col-md-4 col-sm-6">
+              <li className="col-md-3 col-sm-6">
                 <a href="/news-details">Market Research</a>
-              </li>
-              <li className="col-md-4 col-sm-6">
-                <a href="/news-details">Public Opinion</a>
               </li>
             </ul>
           </div>
@@ -466,7 +463,8 @@ export default function Home() {
                 </a>
               </div>
 
-              <div className="video_widget">
+              {/* <div className="video_widget">
+                  <h2>Trending Reports</h2>
                 {blogs
                   .filter((item) => item.videoType === "1") // ONLY VIDEO BLOGS
                   .slice(0, 3) // SHOW 3 VIDEOS
@@ -501,7 +499,7 @@ export default function Home() {
                       </div>
                     );
                   })}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -551,12 +549,12 @@ export default function Home() {
             <p>Welcome! Check latest Bengal Election Insights.</p>
 
             <img
-              src="/images/exitpoll.png" // your generated image
+              src="/images/slider_1.png" // your generated image
               alt="Exit Poll"
               style={{ width: "100%", borderRadius: "10px" }}
             />
 
-            <a href="/exit-poll" className="btn btn-primary mt-3">
+            <a href="/reports" className="btn btn-primary mt-3">
               View Details
             </a>
           </div>
