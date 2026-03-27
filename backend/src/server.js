@@ -1,6 +1,6 @@
 import cors from "cors";
 import dotenv from "dotenv";
-dotenv.config(); // Must come before using process.env
+dotenv.config();
 
 import express from "express";
 import mongoose from "mongoose";
@@ -19,14 +19,6 @@ import pollRoutes from "./routes/pollRoutes.js";
 import liveRoutes from "./routes/liveRoutes.js";
 
 const app = express();
-
-// app.use(
-//   cors({
-//     origin: "http://localhost:3000",
-//     methods: "GET,POST,PUT,DELETE,PATCH",
-//     credentials: true,
-//   }),
-// );
 
 app.use(
   cors({

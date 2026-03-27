@@ -21,7 +21,12 @@ export default function CheckoutContent() {
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.async = true;
+
     document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script); // ✅ cleanup
+    };
   }, []);
 
   useEffect(() => {
@@ -50,6 +55,7 @@ export default function CheckoutContent() {
     };
 
     loadPlan();
+    return () => controller.abort();
   }, [planId, router]);
 
   const basePrice = () => {
@@ -58,7 +64,8 @@ export default function CheckoutContent() {
     return Math.round(plan.price * 12 * 0.8); // yearly discount
   };
 
-  const price = basePrice();
+  //   const price = basePrice();
+  const price = useMemo(() => basePrice(), [plan, billing]);
   const gst = Math.round(price * 0.18);
   const total = price + gst;
 
@@ -71,6 +78,7 @@ export default function CheckoutContent() {
 
       if (!customerId) {
         alert("Please login first");
+        setProcessing(false); // ✅ fix
         router.push("/login");
         return;
       }
@@ -95,7 +103,7 @@ export default function CheckoutContent() {
         key: data.key,
         amount: data.amount * 100,
         currency: "INR",
-        name: "Know Your Reality",
+        name: "IGI Strategy",
         description: `${plan.name} Subscription`,
         order_id: data.order_id,
         handler: function () {
@@ -103,6 +111,11 @@ export default function CheckoutContent() {
           router.push("/thank-you");
         },
       };
+
+      if (!window.Razorpay) {
+        alert("Payment system not loaded. Try again.");
+        return;
+      }
 
       const rzp = new window.Razorpay(options);
       rzp.open();
@@ -126,7 +139,9 @@ export default function CheckoutContent() {
     );
   }
 
-  if (!plan) return null;
+  if (!plan) {
+    return <p className="text-center">Invalid plan</p>;
+  }
 
   return (
     <>

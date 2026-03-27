@@ -12,11 +12,13 @@ export default function BlogDetails() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!slug) return;
+
     fetch(`${setting.api}/api/blogs/${slug}`)
       .then((res) => res.json())
       .then((res) => {
         setBlog(res.data);
-        console.log(res.data);
+
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -43,7 +45,7 @@ export default function BlogDetails() {
 
               {blog.thumbnail && (
                 <img
-                  src={`${setting.json}/uploads/images/${blog.thumbnail}`}
+                  src={`${setting.api}/uploads/images/${blog.thumbnail}`}
                   alt={blog.title}
                 />
               )}

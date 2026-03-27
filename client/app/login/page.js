@@ -19,11 +19,13 @@ export default function About() {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+
+      [e.target.name]: e.target.value.trim(),
     });
   };
 
   const handleSubmit = async (e) => {
+    if (loading) return;
     e.preventDefault();
     setError("");
     setLoading(true);
@@ -37,11 +39,14 @@ export default function About() {
         body: JSON.stringify(formData),
       });
 
-      const data = await res.json();
-
-      if (!res.ok || !data.success) {
-        setError(data.message || "Invalid email or password");
-        return;
+      try {
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          setError("Invalid email or password");
+          return;
+        }
+      } catch {
+        throw new Error("Invalid server response");
       }
 
       localStorage.setItem(

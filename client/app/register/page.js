@@ -69,7 +69,6 @@ export default function Register() {
     <>
       <Header />
 
-      {/* Page Header */}
       <div className="container">
         <div className="pages_heder">
           <h2>Register Page</h2>
@@ -87,7 +86,6 @@ export default function Register() {
         </div>
       </div>
 
-      {/* Register Form */}
       <section className="login_area">
         <div className="container">
           <div className="login_inner">

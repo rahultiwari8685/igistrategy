@@ -22,7 +22,7 @@ import {
 } from '@coreui/react'
 import secureLocalStorage from 'react-secure-storage'
 import { useParams } from 'react-router-dom'
-// ✅ Validation Schema
+
 const schema = yup.object().shape({
   title: yup.string().required('Title is required'),
   slug: yup.string().required('Slug is required'),
@@ -31,7 +31,6 @@ const schema = yup.object().shape({
   type: yup.string().required('Video source is required'),
 })
 
-// ✅ Categories with IDs
 const categoriesList = [
   { id: 1, name: 'Politics' },
   { id: 2, name: 'Sport' },
@@ -42,7 +41,7 @@ const UpdateNews = () => {
   const [slugEdited, setSlugEdited] = useState(false)
   const [editingNews, setEditingNews] = useState(null)
   const [newsList, setNewsList] = useState([])
-  const { id } = useParams() // ✅ get id from params
+  const { id } = useParams()
 
   const {
     register,
@@ -146,7 +145,6 @@ const UpdateNews = () => {
     fetchNews()
   }, [])
 
-  // ✅ Save / Update News
   const saveNews = async (data) => {
     const formData = new FormData()
     formData.append('title', data.title)
@@ -155,7 +153,6 @@ const UpdateNews = () => {
     formData.append('video_type', data.videoType)
     formData.append('type', data.type)
 
-    // ✅ categories as array [1,2,3]
     data.categories.forEach((id) => {
       formData.append('categories[]', id)
     })

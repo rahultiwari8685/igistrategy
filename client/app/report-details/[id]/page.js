@@ -132,7 +132,6 @@ export default function ShopDetails() {
                   </ul>
                 </div>
 
-                {/* TABS */}
                 <div className="review-tab col-12 mt-4">
                   <ul className="nav nav-tabs">
                     <li>
