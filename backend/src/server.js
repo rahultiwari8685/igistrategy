@@ -17,8 +17,20 @@ import webhookRoutes from "./routes/webhookRoutes.js";
 import customerAuthRoutes from "./routes/customerAuth.js";
 import pollRoutes from "./routes/pollRoutes.js";
 import liveRoutes from "./routes/liveRoutes.js";
+const rateLimit = require("express-rate-limit");
 
 const app = express();
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // max 100 requests per IP
+  message: {
+    success: false,
+    message: "Too many requests, please try again later",
+  },
+});
+
+app.use(limiter);
 
 app.use(
   cors({
