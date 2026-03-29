@@ -17,7 +17,7 @@ import webhookRoutes from "./routes/webhookRoutes.js";
 import customerAuthRoutes from "./routes/customerAuth.js";
 import pollRoutes from "./routes/pollRoutes.js";
 import liveRoutes from "./routes/liveRoutes.js";
-const rateLimit = require("express-rate-limit");
+import rateLimit from "express-rate-limit";
 
 const app = express();
 
