@@ -38,11 +38,32 @@ const PollContainer = () => {
 
     loadPoll();
 
-    return () => controller.abort(); // ✅ cleanup
+    return () => controller.abort();
   }, []);
 
+  // const handleVoted = async (index) => {
+  //   if (fetchingResult || !poll?._id) return;
+
+  //   setSelectedIndex(index);
+  //   setFetchingResult(true);
+
+  //   try {
+  //     const res = await fetch(`${setting.api}/api/polls/${poll._id}/results`);
+  //     const data = await res.json();
+
+  //     if (data.success) {
+  //       setResults(data.data);
+  //       setVoted(true);
+  //     }
+  //   } catch (err) {
+  //     console.error("Failed to fetch results", err);
+  //   } finally {
+  //     setFetchingResult(false);
+  //   }
+  // };
+
   const handleVoted = async (index) => {
-    if (fetchingResult || !poll?._id) return;
+    if (!poll?._id) return;
 
     setSelectedIndex(index);
     setFetchingResult(true);
@@ -56,7 +77,7 @@ const PollContainer = () => {
         setVoted(true);
       }
     } catch (err) {
-      console.error("Failed to fetch results", err);
+      console.error(err);
     } finally {
       setFetchingResult(false);
     }

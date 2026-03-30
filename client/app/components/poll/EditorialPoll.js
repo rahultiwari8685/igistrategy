@@ -45,6 +45,48 @@ const EditorialPoll = ({ poll, onVoted }) => {
     }
   };
 
+  const handleVote = async (index) => {
+    if (loading) return;
+
+    const logininfo = JSON.parse(localStorage.getItem("logininfo"));
+
+    if (!logininfo?.token) {
+      router.push("/login");
+      return;
+    }
+
+    setSelected(index);
+    setLoading(true);
+
+    try {
+      const res = await fetch(`${setting.api}/api/polls/${poll._id}/vote`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${logininfo.token}`,
+        },
+        body: JSON.stringify({ option_index: index }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        // ✅ save locally (important)
+        localStorage.setItem(`poll_${poll._id}`, index);
+
+        // ✅ trigger result view
+        onVoted(index);
+      } else {
+        alert(data.message || "Already voted");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="border border-gray-200 bg-white p-6 md:p-8 max-w-3xl mx-auto">
       <p className="text-xs uppercase tracking-wider text-gray-500 mb-2">
@@ -56,8 +98,7 @@ const EditorialPoll = ({ poll, onVoted }) => {
       </h2>
 
       <div className="space-y-3">
-        if (!poll || !poll.options) return null;
-        {poll.options.map((opt, i) => (
+        {/* {poll.options.map((opt, i) => (
           <button
             key={i}
             onClick={() => setSelected(i)}
@@ -70,16 +111,28 @@ const EditorialPoll = ({ poll, onVoted }) => {
           >
             {opt.text}
           </button>
+        ))} */}
+
+        {poll.options.map((opt, i) => (
+          <button
+            key={i}
+            onClick={() => handleVote(i)} // ✅ change here
+            disabled={loading}
+            className={`w-full text-left px-4 py-3 border rounded-md transition
+      ${selected === i ? "border-black bg-gray-100" : "hover:border-gray-400"}`}
+          >
+            {opt.text}
+          </button>
         ))}
       </div>
 
-      <button
+      {/* <button
         onClick={submitVote}
         disabled={loading || selected === null}
         className="mt-6 px-6 py-2 bg-black text-white text-sm rounded disabled:opacity-50"
       >
         {loading ? "Submitting…" : "Submit Opinion"}
-      </button>
+      </button> */}
     </div>
   );
 };

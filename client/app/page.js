@@ -112,43 +112,63 @@ export default function Home() {
   const ReportCard = ({ report }) => {
     const pdfUrl = getPdfUrl(report.preview_pdf);
 
+    const previewUrl = pdfUrl
+      ? `https://docs.google.com/gview?url=${pdfUrl}&embedded=true`
+      : null;
+
     return (
-      <div className="col-md-12 mb-4">
-        <div className="report_card">
-          {/* Thumbnail */}
-          <div className="report_img">
-            <a href={`/report-details/${report._id}`}>
-              <img
-                src={
-                  report.thumbnail
-                    ? `${setting.api}/uploads/images/${report.thumbnail}`
-                    : "https://img.icons8.com/color/480/pdf.png"
-                }
-                alt={report.title}
+      <div className="col-md-6 mb-4">
+        <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+          {/* Preview Section */}
+          <div className="relative h-[250px] overflow-hidden group">
+            {previewUrl ? (
+              <iframe
+                src={previewUrl}
+                title={report.title}
+                className="w-full h-full border-0 pointer-events-none blur-[1.5px]"
               />
+            ) : (
+              <img
+                src="https://img.icons8.com/color/480/pdf.png"
+                alt="pdf"
+                className="w-full h-full object-contain"
+              />
+            )}
 
-              {/* Overlay */}
-              <div className="report_overlay">
-                <i className="fa fa-file-pdf-o"></i>
-                <span>View PDF</span>
-              </div>
-            </a>
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition">
+              <Link
+                href={`/report-details/${report._id}`}
+                className="bg-white text-black text-sm px-4 py-1 rounded-full hover:bg-gray-200 transition"
+              >
+                Preview
+              </Link>
 
-            <span className="tag_btn">{report.report_type || "Report"}</span>
+              <Link
+                href={`/report-details/${report._id}`}
+                className="bg-black text-white text-sm px-4 py-1 rounded-full border border-white hover:bg-gray-900 transition"
+              >
+                Buy Report
+              </Link>
+            </div>
+
+            {/* Tag */}
+            <span className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 rounded">
+              {report.report_type || "Report"}
+            </span>
           </div>
 
           {/* Content */}
-          <div className="report_content">
-            <a href={`/report-details/${report._id}`} className="t_heding">
+          <div className="p-4">
+            <h5 className="text-sm font-semibold line-clamp-2">
               {report.title}
-            </a>
+            </h5>
 
-            <Link
-              href={`/report-details/${report._id}`}
-              className="theme_btn mt-2"
-            >
-              Read Report
-            </Link>
+            {/* Optional meta */}
+            <div className="flex justify-between items-center mt-2 text-xs text-gray-500">
+              <span>Premium Report</span>
+              <span>PDF</span>
+            </div>
           </div>
         </div>
       </div>
