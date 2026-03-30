@@ -113,36 +113,41 @@ export default function Home() {
     const pdfUrl = getPdfUrl(report.preview_pdf);
 
     return (
-      <div className="col-md-12 col-sm-12 mb-4">
-        <div className="shop_items">
-          {/* PDF Preview */}
-          <div className="shop_img">
-            {pdfUrl ? (
-              <iframe
-                src={pdfUrl}
-                title={report.title}
-                width="100%"
-                height="220"
-                style={{
-                  border: "1px solid #ddd",
-                  borderRadius: "6px",
-                }}
-              />
-            ) : (
+      <div className="col-md-6 mb-4">
+        <div className="report_card">
+          {/* Thumbnail */}
+          <div className="report_img">
+            <a href={`/report-details/${report._id}`}>
               <img
-                src="https://via.placeholder.com/400x220?text=No+Preview"
+                src={
+                  report.thumbnail
+                    ? `${setting.api}/uploads/images/${report.thumbnail}`
+                    : "https://img.icons8.com/color/480/pdf.png"
+                }
                 alt={report.title}
               />
-            )}
+
+              {/* Overlay */}
+              <div className="report_overlay">
+                <i className="fa fa-file-pdf-o"></i>
+                <span>View PDF</span>
+              </div>
+            </a>
+
+            <span className="tag_btn">{report.report_type || "Report"}</span>
           </div>
 
-          <div className="shop_text">
-            <span className="badge badge-dark mb-2">{report.report_type}</span>
+          {/* Content */}
+          <div className="report_content">
+            <a href={`/report-details/${report._id}`} className="t_heding">
+              {report.title}
+            </a>
 
-            <h5 className="s_heding">{report.title}</h5>
-
-            <Link href={`/report-details/${report._id}`} className="theme_btn">
-              View Report
+            <Link
+              href={`/report-details/${report._id}`}
+              className="theme_btn mt-2"
+            >
+              Read Report
             </Link>
           </div>
         </div>

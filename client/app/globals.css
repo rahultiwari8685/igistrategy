@@ -69,3 +69,55 @@ body {
     opacity: 1;
   }
 }
+
+
+.report_card {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: 0.3s;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.report_card:hover {
+  transform: translateY(-5px);
+}
+
+.report_img {
+  position: relative;
+}
+
+.report_img img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.report_overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.6);
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.report_card:hover .report_overlay {
+  opacity: 1;
+}
+
+.report_overlay i {
+  font-size: 30px;
+  margin-bottom: 5px;
+}
+
+.report_content {
+  padding: 15px;
+}

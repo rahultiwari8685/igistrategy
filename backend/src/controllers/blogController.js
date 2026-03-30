@@ -17,11 +17,17 @@ export const createBlog = async (req, res) => {
       return res.status(400).json({ message: "Title & slug required" });
     }
 
-    // ✅ check duplicate
-    const exists = await Blog.findOne({ slug: cleanSlug });
-    if (exists) {
-      return res.status(400).json({ message: "Slug already exists" });
-    }
+    // const cleanSlug = slug
+    //   .toLowerCase()
+    //   .trim()
+    //   .replace(/[^a-z0-9\s-]/g, "")
+    //   .replace(/\s+/g, "-");
+
+    // // ✅ check duplicate
+    // const exists = await Blog.findOne({ slug: cleanSlug });
+    // if (exists) {
+    //   return res.status(400).json({ message: "Slug already exists" });
+    // }
 
     const thumbnail = req.file ? req.file.filename : "";
 
