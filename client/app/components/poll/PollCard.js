@@ -54,7 +54,6 @@ const PollCard = ({ poll, onVoted }) => {
       <h3 className="text-lg font-semibold mb-4">{poll.question}</h3>
 
       <div className="space-y-2 mb-4">
-        if (!poll || !poll.options) return null;
         {poll.options.map((opt, i) => (
           <label
             key={i}

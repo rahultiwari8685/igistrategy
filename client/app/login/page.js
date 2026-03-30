@@ -39,16 +39,20 @@ export default function About() {
         body: JSON.stringify(formData),
       });
 
+      let data;
+
       try {
-        const data = await res.json();
-        if (!res.ok || !data.success) {
-          setError("Invalid email or password");
-          return;
-        }
+        data = await res.json();
       } catch {
         throw new Error("Invalid server response");
       }
 
+      if (!res.ok || !data.success) {
+        setError("Invalid email or password");
+        return;
+      }
+
+      // ✅ now data available
       localStorage.setItem(
         "logininfo",
         JSON.stringify({
@@ -62,6 +66,7 @@ export default function About() {
 
       router.push("/dashboard");
     } catch (err) {
+      console.error(err); // ✅ DEBUG
       setError("Server error. Please try again.");
     } finally {
       setLoading(false);

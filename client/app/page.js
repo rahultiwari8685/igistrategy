@@ -113,7 +113,7 @@ export default function Home() {
     const pdfUrl = getPdfUrl(report.preview_pdf);
 
     return (
-      <div className="col-md-6 mb-4">
+      <div className="col-md-12 mb-4">
         <div className="report_card">
           {/* Thumbnail */}
           <div className="report_img">
@@ -605,7 +605,7 @@ export default function Home() {
               ×
             </button>
 
-            <h2>IGI Exit Poll 2026</h2>
+            <h2>IGI Bengal Assembly Exit Poll 2026</h2>
             <p>Welcome! Check latest Bengal Election Insights.</p>
 
             <img
