@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { CForm, CFormInput, CFormCheck, CButton, CRow, CCol } from '@coreui/react'
 import axios from 'axios'
 import setting from '../../../setting.json'
+import secureLocalStorage from 'react-secure-storage'
 
 const PollForm = ({ editPoll, onSuccess }) => {
   const [question, setQuestion] = useState('')
