@@ -117,7 +117,7 @@ export default function Home() {
       : null;
 
     return (
-      <div className="col-md-6 mb-4">
+      <div className="col-md-12 mb-4">
         <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
           {/* Preview Section */}
           <div className="relative h-[250px] overflow-hidden group">

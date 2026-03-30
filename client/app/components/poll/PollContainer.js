@@ -25,7 +25,26 @@ const PollContainer = () => {
         const data = await res.json();
 
         if (data.success && data.data) {
-          setPoll(data.data);
+          const pollData = data.data;
+          setPoll(pollData);
+
+          // ✅ CHECK IF USER ALREADY VOTED
+          const savedVote = localStorage.getItem(`poll_${pollData._id}`);
+
+          if (savedVote !== null) {
+            setSelectedIndex(Number(savedVote));
+            setVoted(true);
+
+            // ✅ ALSO LOAD RESULTS
+            const resultRes = await fetch(
+              `${setting.api}/api/polls/${pollData._id}/results`,
+            );
+            const resultData = await resultRes.json();
+
+            if (resultData.success) {
+              setResults(resultData.data);
+            }
+          }
         }
       } catch (err) {
         if (err.name !== "AbortError") {
