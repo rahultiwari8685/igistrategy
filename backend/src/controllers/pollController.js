@@ -2,9 +2,9 @@ import Poll from "../models/Poll.js";
 
 export const createPoll = async (req, res) => {
   try {
-    if (!req.user || req.user.role !== "admin") {
-      return res.status(403).json({ success: false, message: "Unauthorized" });
-    }
+    // if (!req.user || req.user.role !== "admin") {
+    //   return res.status(403).json({ success: false, message: "Unauthorized" });
+    // }
 
     const { question, options, start_date, end_date } = req.body;
 
